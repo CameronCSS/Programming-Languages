@@ -35,7 +35,7 @@ All of my coding practice and projects will be located here.
 
 ----
 
-### <a href="https://github.com/CameronCSS/PersonalProjects">Back to Index</a>
+### <a href="https://github.com/CameronCSS/PersonalProjects">BACK TO INDEX</a>
 
 ## Contact Me
 
