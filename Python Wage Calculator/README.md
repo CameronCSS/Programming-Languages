@@ -5,7 +5,7 @@
 ```
 -- The Remaining balance will be shown after you Enter wage, hours, Bills and Hit calculate --
 
--- This app uses the PyQt5 Framework to build a UI --
+-- This app uses the PyQt5 library to build a UI --
 
 -- On the First tab you will enter your Wage and Hours worked --
 -- You Then Hit 'Calculate' to calculate your check amount --
