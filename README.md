@@ -1,10 +1,10 @@
 # Programming Personal Projects
 
-All of my coding practice and projects will be located here.
+All of my practice code and projects will be located here.
 
 <details open>
-  <summary>View Projects</summary>
-<a href="https://github.com/CameronCSS/Programming-Projects/tree/main/Python%20Wage%20Calculator" target="new">Python Wage Calculator</a>
+  <summary>View Code</summary>
+<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Python%20Wage%20Calculator" target="new">Python Wage Calculator</a>
 </details>
 
 ## Experience
@@ -20,11 +20,11 @@ All of my coding practice and projects will be located here.
     
 <details open>
 <summary>SQL Projects/Practice </summary>
-<a href="https://github.com/CameronCSS/SQL-Projects/tree/main/8%20Week%20SQL%20Challenge%20%23%201" target="new">8 Week SQL Challenge # 1</a>
+<a href="https://github.com/CameronCSS/SQL-Queries/tree/main/8%20Week%20SQL%20Challenge%20%23%201" target="new">8 Week SQL Challenge # 1</a>
 <br>
-<a href="https://github.com/CameronCSS/SQL-Projects/tree/main/Khan%20Academy%20Advanced%20SQL" target="new">Khan Academy Advanced SQL</a>
+<a href="https://github.com/CameronCSS/SQL-Queries/tree/main/Khan%20Academy%20Advanced%20SQL" target="new">Khan Academy Advanced SQL</a>
 <br>
-<a href="https://github.com/CameronCSS/SQL-Projects/tree/main/SQLbolt%20-%20SQL%20lessons" target="new">SQLbolt - SQL lessons</a>
+<a href="https://github.com/CameronCSS/SQL-Queries/tree/main/SQLbolt%20-%20SQL%20lessons" target="new">SQLbolt - SQL lessons</a>
 </details>
 
 <details open>
