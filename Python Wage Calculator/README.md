@@ -133,7 +133,7 @@ sys.exit(app.exec_())
 
 ```
 
-### <a href="https://github.com/CameronCSS/PersonalProjects">BACK TO INDEX</a>
+### <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md">BACK TO PORTFOLIO</a>
 
 ## Contact Me
 
