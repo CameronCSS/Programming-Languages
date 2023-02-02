@@ -137,7 +137,7 @@ sys.exit(app.exec_())
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md">BACK TO PORTFOLIO</a>
+<a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong>« Back to Portfolio</strong></a>
 
 ## Contact Me
 
