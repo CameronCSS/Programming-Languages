@@ -2,7 +2,6 @@
 <div align="center">
 
   <img src="https://user-images.githubusercontent.com/121735588/216512455-fadd17bb-91bb-48f2-8d35-03b9f5c69481.png" alt="pythonLogo" width="200" height="200">
-	<br><a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong><sub>« Back to Portfolio</sub></strong></a>
 
 
   <h2 align="center">Programming Personal Projects</h2>
@@ -11,6 +10,7 @@
    <br> <sub><a href="#Contact">:wavy_dash: Contact Info :wavy_dash:</a></sub>
 <br>
     <br>
+     <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong>« Back to Portfolio</strong></a>
   </p>
 </div>
 
