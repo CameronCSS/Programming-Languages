@@ -261,9 +261,9 @@ heatmap(my_subset)
   
 ## Summary of R
   
-  - R is a versatile language and software environment that can be used for a wide range of data analysis and visualization tasks.
-  - It is widely used in the data community by users and developers alike. 
-  - The language is easy to learn, and has a variety of tools and packages that make it easy to use for data analysis and visualization. 
+  - R is a versatile language and its software environment can be used for a wide range of data analysis and visualization tasks.
+  - It is widely used in the data community by users and developers alike.
+  - The language is easy to learn, and has a variety of tools and packages that make it easy to use for data analysis and visualization.
   - Overall, R is a powerful and versatile tool for data analysts, statisticians, and scientists working with data.
 
 ----
