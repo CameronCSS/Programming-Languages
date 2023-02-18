@@ -268,12 +268,125 @@ heatmap(my_subset)
 
 ----
 
+### Sample Data Project
+
+---
+:bookmark_tabs: __Here's a sample data project example using the 'mtcars' dataset that comes with R that demonstrates some common data analysis and visualization tasks:__
+<br>
+```r
+# Load the required packages
+library(dplyr)
+library(ggplot2)
+
+# Load the data into R (use mtcars dataset as an example)
+data <- mtcars
+
+# Examine the structure of the data
+str(data)
+
+# View the first few rows of the data
+head(data)
+
+# Calculate summary statistics for a numeric variable
+summary(data$mpg)
+
+# Create a scatterplot to visualize the relationship between two variables
+ggplot(data, aes(x = wt, y = mpg)) +
+  geom_point()
+
+# Create a histogram to visualize the distribution of a variable
+ggplot(data, aes(x = mpg)) +
+  geom_histogram()
+
+# Filter the data to include only rows that meet a certain condition
+filtered_data <- filter(data, cyl == 6)
+
+# Group the data by a categorical variable and calculate summary statistics for each group
+grouped_data <- group_by(data, cyl) %>%
+  summarize(mean_mpg = mean(mpg))
+
+# Create a bar chart to visualize the summary statistics for each group
+ggplot(grouped_data, aes(x = cyl, y = mean_mpg)) +
+  geom_bar(stat = "identity")
+
+
+```
+<br>
+
+
+### Sample Output
+
+<br>
+
+```
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+'data.frame':	32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  10.40   15.43   19.20   20.09   22.80   33.90 
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`summarise()` ungrouping output (override with `.groups` argument)
+```
+
+
+<br>
+
+<div align=>
+<img src="https://user-images.githubusercontent.com/121735588/219881951-fd165485-10f7-466e-b54b-6079d83a83ff.png" width="400" height="400">
+</div>
+
+<br>
+
+<div align=>
+<img src="https://user-images.githubusercontent.com/121735588/219881964-72ba02da-a5c2-4508-b162-c042c0993527.png" width="400" height="400">
+</div>
+
+<br>
+
+<div align=>
+<img src="https://user-images.githubusercontent.com/121735588/219881980-5e851ac4-a0ae-4b5b-85b9-b98631b08977.png" width="400" height="400">
+</div>
+
+<br>
+
+This code loads the required libraries, dplyr and ggplot2. Then, it loads the mtcars dataset and examines the structure of the data and the first few rows. It calculates summary statistics for a numeric variable, mpg, and creates a scatterplot to visualize the relationship between weight (wt) and mpg. It also creates a histogram to visualize the distribution of mpg. The code then filters the data to include only rows where the number of cylinders (cyl) is equal to 6. Next, it groups the data by the number of cylinders and calculates the mean mpg for each group. Finally, it creates a bar chart to visualize the summary statistics for each group.
+
+
+
+----
+
 ### View My Other Projects
     
 <details>
   <summary>SQL Queries</summary>
 <a href="https://github.com/CameronCSS/SQL-Queries/tree/main/8%20Week%20SQL%20Challenge%20%23%201" target="new">8 Week SQL Challenge # 1</a>
-<br>
+<br>4
 &nbsp; &nbsp;:arrow_right_hook: - Explored complex queries to clean data, compute customer figures, and organize data in unusual ways.
 <br>
 <br>
