@@ -17,3 +17,7 @@
 *.py linguist-detectable=true
 *.py linguist-documentation=false
 *.py linguist-language=python
+
+*.r linguist-detectable=true
+*.r linguist-documentation=false
+*.r linguist-language=R
