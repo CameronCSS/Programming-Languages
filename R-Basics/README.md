@@ -13,10 +13,76 @@ In fact, R is still one of the most popular programming languages for data analy
 
 <br>
 
-### The basics of R:
-NOTE: This isnt a full collection of everything R can do. Just a summary of the basics
+### Why should I use R* ?
 
 ---
+
+- FREE and open-source:
+<ul>R is a free and open-source language, which means that it can be used by anyone without any licensing fees. This makes it an accessible option for individuals and organizations of all sizes.</ul>
+
+<br>
+
+- Rich ecosystem: 
+<ul>R has a very large and active community of developers who contribute to a wide range of packages and tools for data analysis, visualization, and modeling. This means that there are many powerful tools available to R users that are specifically designed for their needs.</ul>
+
+<br>
+
+- Easy to learn:
+<ul>R has a relatively easy-to-learn syntax and is designed to be user-friendly for statisticians and data analysts, even those who do not have a strong programming background.</ul>
+
+<br>
+
+- Flexibility:
+<ul>R is a highly flexible language that can be used for a wide range of data analysis and modeling tasks, from simple data manipulation to complex machine learning algorithms.</ul>
+
+<br>
+
+- Reproducibility:
+<ul>R provides a powerful set of tools for reproducible research, including the ability to create automated reports and share code and data with others.</ul>
+
+----
+
+### The basics of R:
+##### *NOTE: This isnt a full collection of everything R can do. Just a summary of the basics*
+
+---
+
+:small_blue_diamond:R is easy to learn!
+
+:small_blue_diamond:R is generally considered to be an easy language to learn and use, 
+especially for those who have some background in programming or statistics. 
+
+:small_blue_diamond:Here is some sample R code that demonstrates some basic functionality:
+
+
+### CODE
+
+```r
+# Create a vector of numbers from 1 to 5
+my_vector <- c(1, 2, 3, 4, 5)
+
+# Calculate the mean of the vector
+mean(my_vector)
+
+# Create a matrix of random numbers
+my_matrix <- matrix(rnorm(25), nrow=5, ncol=5)
+
+# Subset the matrix to include only the first two rows and columns
+my_subset <- my_matrix[1:2, 1:2]
+
+# Plot the subset as a heatmap
+heatmap(my_subset)
+
+
+```
+
+<br>
+<br>
+
+:small_red_triangle_down: Here are some basic items you will encounter in R*.
+
+<br>
+
 
 <sup> **Click the arrow to view the section* </sup>
 
