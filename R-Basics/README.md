@@ -268,9 +268,8 @@ heatmap(my_subset)
 
 ----
 
-### Sample Data Project
+## Sample Data Project
 
----
 :bookmark_tabs: __Here's a sample data project example using the 'mtcars' dataset that comes with R that demonstrates some common data analysis and visualization tasks:__
 <br>
 ```r
