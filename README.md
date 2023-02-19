@@ -52,6 +52,7 @@
 <br>
 
 </details>
+<br>
 
 <details>
 <summary>Data Analysis / Visuals Projects</summary>
