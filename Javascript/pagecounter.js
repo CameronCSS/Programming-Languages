@@ -1,3 +1,23 @@
+```html
+<div id="counter">
+<span id="pageviews">Pageviews: </span><span id="count">0</span>
+</div>
+```
+
+```css
+#counter {
+font-size: 24px;
+font-family: Arial, sans-serif;
+}
+#pageviews {
+color: lightgrey;
+}
+#count {
+font-weight: bold;
+color: pink;
+}
+```
+
 const countEl = document.getElementById('count');
 
 updateVisitCount();
