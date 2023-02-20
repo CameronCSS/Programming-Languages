@@ -130,8 +130,16 @@ print(title)
 print(price)
   
 ```
+	
+<br>
+
+#### This will then print the results giving us the Title and the price pulled from the website. The possible data we can gather is infinite 📈
+#### Building upon these basic principles we can begin searching the entire web for information without having to do in manually.
+
+
+---
   
-### The above code is the old method, which can be found from Alex the Analyst on youtube [(Click Here)](https://www.youtube.com/watch?v=HiOtQMcI5wg)
+### ❗ ❗ The above code is the old method, which can be found from Alex the Analyst on youtube [(Click Here)](https://www.youtube.com/watch?v=HiOtQMcI5wg)
   <br>
 
 ```diff 
