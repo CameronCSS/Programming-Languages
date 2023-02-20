@@ -1,15 +1,11 @@
-var count = 0;
-  var countSpan = document.getElementById("count");
+const countEl = document.getElementById('count');
 
-  function updateCounter() {
-    count++;
-    countSpan.textContent = count;
-  }
+updateVisitCount();
 
-  // Call the updateCounter function when the page loads
-  window.onload = updateCounter;
-
-  // Call the updateCounter function when the DOM is ready
-  document.addEventListener("DOMContentLoaded", function() {
-    updateCounter();
-  });
+function updateVisitCount() {
+	fetch('https://api.countapi.xyz/update/pigspod/count/?amount=1')
+	.then(res => res.json())
+	.then(res => {
+		countEl.innerHTML = res.value;
+	})
+}
