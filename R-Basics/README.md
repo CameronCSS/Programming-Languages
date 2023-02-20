@@ -381,6 +381,7 @@ This code loads the required libraries, dplyr and ggplot2. Then, it loads the mt
 ----
 
 ### View My Other Projects
+<sub>**Click arrow to view content*</sub>   
     
 <details>
   <summary>SQL Queries</summary>
