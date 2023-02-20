@@ -133,7 +133,9 @@ print(price)
   
 ### The above code is the old method, which can be found from Alex the Analyst on youtube [(Click Here)](https://www.youtube.com/watch?v=HiOtQMcI5wg)
   <br>
- #### If you are following his methods and have found your way here you will have to use this updated code to get the web scraper to work
+
+
+#### I am currently building a new version that will actually work. Amazon has changed their policies and it is no longer possible to scrape their information liek this.
   
   
   
