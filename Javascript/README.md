@@ -15,6 +15,29 @@
   </p>
 </div>
 
+## Javascript Code
+<a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Javascript/Anchor_Episode_list.js" target="new">Anchor Podcast Episode List</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - creates an Episode list from an Anchor RSS feed for a Podcast
+
+<br>
+
+<a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Javascript/Anchor_Latest_Episode.Js" target="new">Anchor Podcast Latest Episode</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - Similar to the above code, but Only gets the info for the most recent Episode from the Anchor RSS feed
+
+<br>
+
+<a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Javascript/Searchbar.js" target="new">Carrd.co Search Bar</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - creates a search bar to search through the Podcast episode list We created above
+
+<br>
+
+<a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Javascript/pagecounter.js" target="new">Countapi Page View Counter</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - creates a Page View counter using the Countapi on [https://api.countapi.xyz](https://countapi.xyz/)
+
   
 ----
 
