@@ -1,7 +1,7 @@
 // This code creates a search bar to search through a Podcast episode list for keywords
 
 // This code was created specifically to work on Carrd.co website as an alternative Search function since they do not have one,
-// but it should work anywhere you can run Javascript*/
+// but it should work anywhere you can run Javascript
 
 // The base of the code is setup to run as HTML so it works inside the <EMBED> container on Carrd
 
