@@ -1,3 +1,5 @@
+// Visit https://countapi.xyz/ to View Documentation and Create your API
+
 # html
 <div id="counter">
 <span id="pageviews">Pageviews: </span><span id="count">0</span>
@@ -24,7 +26,7 @@ const countEl = document.getElementById('count');
 updateVisitCount();
 
 function updateVisitCount() {
-	fetch('https://api.countapi.xyz/update/pigspod/count/?amount=1')
+	fetch('https://api.countapi.xyz/update/YOUR_URL/count/?amount=1')
 	.then(res => res.json())
 	.then(res => {
 		countEl.innerHTML = res.value;
