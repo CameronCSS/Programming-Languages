@@ -29,6 +29,11 @@
 <a href="https://github.com/CameronCSS/Programming-Languages/tree/main/R-Basics" target="new">R* Basics</a>
 
 &nbsp; &nbsp;:arrow_right_hook: - Made a full breakdown detailing the basic functions and uses of the R* programming language.
+
+## Javascript Projects
+<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Javascript" target="new">Javascript Code</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - A repo full of my Javascript code. Lots of custom stuff made to work on Carrd websites.
   
 ----
 
