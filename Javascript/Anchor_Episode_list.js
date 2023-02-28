@@ -168,7 +168,7 @@ items.forEach(item => {
   } 
   // Otherwise, use a default image URL
   else {
-    img.src = 'https://pigspodtest.carrd.co/assets/images/image03.jpg?v=a4b58d62';
+    img.src = 'YOUR_DEFAULT_IMAGE_URL';
   }
   
   // Create a new div element with the class "post-details"
