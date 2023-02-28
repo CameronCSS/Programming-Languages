@@ -8,7 +8,7 @@
 // This Code is to be used in Conjuction with the Episode_list.js RSS pull that I also have available in this repository. 
 // The Search results are sifting through that episode list that is created by the other JS code
 
-// Feel free to adjust the CSS Styling of this code to your needs. Do not adjust the <Script> part of this code to retain its functionality.
+// Feel free to adjust the CSS Styling of this code to your needs. Be Careful adjusting the <Script> part of this code to retain its functionality.
 
 <div id="search"></div>  <!-- Creates an empty div with an id of "search" -->
 
