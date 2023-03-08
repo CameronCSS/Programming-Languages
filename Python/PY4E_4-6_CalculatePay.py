@@ -37,4 +37,4 @@ while True:
         print("Error: Unknown error occurred.")
 
 p = computepay(hrs, rate)
-print("Pay:", p)
+print("Pay", p)
