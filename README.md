@@ -17,7 +17,8 @@
 ## Programming Experience
 :ballot_box_with_check: Data cleaning and Exploring using R
 <br> :ballot_box_with_check: ggplot graphing and data visualization using R
-<br> :ballot_box_with_check: Google data analytics professional certificate (*R) 
+<br> :ballot_box_with_check: Coursera 'Programming for everybody' [Certificate](https://www.coursera.org/account/accomplishments/specialization/certificate/GS3TAMF6TUN6) (Python)
+<br> :ballot_box_with_check: Google data analytics professional [Certificate](https://www.coursera.org/account/accomplishments/specialization/certificate/L872LWPQDXR6) (*R) 
 <br> :ballot_box_with_check: Completed Kaggle 'Intro to Programming' Course
 <br> :ballot_box_with_check: Built out a few simple programs in Python through Self Learning
 <br> :ballot_box_with_check: C# app building in High School
