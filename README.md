@@ -15,7 +15,9 @@
 </div>
 
 ## Programming Experience
-:ballot_box_with_check: Google data analytics professional certificate (*R) 
+:ballot_box_with_check: Data cleaning and Exploring using R
+<br> :ballot_box_with_check: ggplot graphing and data visualization using R
+<br> :ballot_box_with_check: Google data analytics professional certificate (*R) 
 <br> :ballot_box_with_check: Completed Kaggle 'Intro to Programming' Course
 <br> :ballot_box_with_check: Built out a few simple programs in Python through Self Learning
 <br> :ballot_box_with_check: C# app building in High School
@@ -25,15 +27,20 @@
 
 &nbsp; &nbsp;:arrow_right_hook: - Learned the power of Pandas and PyQt5 libraries. Also learned the importance of notating code for Bug fixing in the future.
 
+## R* Projects
+<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Comparing%20Phone%20Prices%20in%20R" target="new">Comparing Phone Prices in R</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - Explored and cleaned a cell phone price dataset found on [Kaggle](https://www.kaggle.com/datasets/rkiattisak/mobile-phone-price).
+
+<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/R-Basics" target="new">R* Basics</a>
+
+&nbsp; &nbsp;:arrow_right_hook: - Made a full breakdown detailing the basic functions and uses of the R* programming language.
+
 ## Javascript Projects
 <a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Javascript" target="new">Javascript Code</a>
 
 &nbsp; &nbsp;:arrow_right_hook: - A repo full of my Javascript code. Lots of custom stuff made to work on Carrd websites.
 
-## Basics of R*
-<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/R-Basics" target="new">R* Basics</a>
-
-&nbsp; &nbsp;:arrow_right_hook: - Made a full breakdown detailing the basic functions and uses of the R* programming language.
   
 ----
 
