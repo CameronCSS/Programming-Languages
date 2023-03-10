@@ -21,7 +21,6 @@
 <br> :ballot_box_with_check: Google data analytics professional [Certificate](https://www.coursera.org/account/accomplishments/specialization/certificate/L872LWPQDXR6) (*R) 
 <br> :ballot_box_with_check: Completed Kaggle 'Intro to Programming' Course
 <br> :ballot_box_with_check: Built out a few simple programs in Python through Self Learning
-<br> :ballot_box_with_check: C# app building in High School
 
 ## Python Projects
 <a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Python%20Wage%20Calculator" target="new">Python Wage Calculator</a>
