@@ -22,6 +22,3 @@
 *.r linguist-documentation=false
 *.r linguist-language=R
 
-*.ipynb linguist-detectable=true
-*.ipynb linguist-documentation=false
-*.ipynb linguist-language=jupyter notebook
