@@ -22,3 +22,5 @@
 *.r linguist-documentation=false
 *.r linguist-language=R
 
+*.ipynb linguist-detectable=false
+*.ipynb linguist-documentation=true
