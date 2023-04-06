@@ -18,10 +18,12 @@
 ❕ I have really started to enjoy using Kaggle Notebooks because of the ability to load them up no matter where I am. 
 Dont need to install anything. Also you can instally load in data sets from Kaggle. Its a really convenient tool. 
 
-[Roller Coaster data exploration]()
+[Roller Coaster data exploration](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
+
 ↪️ - Explored and database of roller coaster information that dates back to the early 1900s.
 
 [Rob sleep predictions]()
+
 ↪️ - [Rob Mulla's](https://www.kaggle.com/robikscube) Kaggle competition to predict his sleep patterns using a sample dataset.
 
 
