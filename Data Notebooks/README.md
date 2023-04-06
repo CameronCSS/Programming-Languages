@@ -15,17 +15,126 @@
 </div>
 
 ## Kaggle Notebooks
-❕ I have really started to enjoy using Kaggle Notebooks because of the ability to load them up no matter where I am. 
+〰️ I have really started to enjoy using Kaggle Notebooks because of the ability to load them up no matter where I am. 
 Dont need to install anything. Also you can instally load in data sets from Kaggle. Its a really convenient tool. 
 
-[Roller Coaster data exploration](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
+## 🔹Roller Coaster data exploration
 
-↪️ - Explored and database of roller coaster information that dates back to the early 1900s.
+##### ▶️ [View the full Notebook code](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
 
-[Rob sleep predictions](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/rob-sleep-predictions.ipynb)
+Explored a database of roller coaster information that dates back to the early 1900s.
 
-↪️ - [Rob Mulla's](https://www.kaggle.com/robikscube) Kaggle competition to predict his sleep patterns using a sample dataset.
+↘️ First we load in the data
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+import seaborn as sns
+plt.style.use('ggplot')
+pd.set_option('max_columns', 200)
+df = pd.read_csv('../input/rollercoaster-database/coaster_db.csv')
+```
 
+Few random data points from exploring the data
+---
+
+### Top years coasters were introduced
+
+```python
+ax = df['Year_Introduced'].value_counts() \
+    .head(10) \
+    .plot(kind='bar', title='Top 10 Years Coasters Introduced')
+ax.set_xlabel('Year Introduced')
+ax.set_ylabel('Count')
+```
+<img src="https://user-images.githubusercontent.com/121735588/230255659-dfda620d-7e13-43b9-8ab4-3c3b293a57bf.png" alt="kaggleLogo" width="400">
+
+
+### Speed vs Height
+```python
+df.plot(kind='scatter', x='Speed_mph', y='Height_ft', title='Coaster Speed vs Height')
+plt.show()
+```
+<img src="https://user-images.githubusercontent.com/121735588/230255743-d0c73d31-986d-414d-bd99-0cc27a0d17ae.png" alt="kaggleLogo" width="400">
+
+### Average speed
+
+```python
+ax = df.query('Location != "Other"') \
+    .groupby('Location')['Speed_mph'] \
+    .agg(['mean', 'count']) \
+    .query('count >= 10') \
+    .sort_values('mean')['mean'] \
+    .plot(kind='barh', figsize=(12,5), title='Average Coaster speed by Location w/ 10+ Coasters')
+ax.set_xlabel('Average Coaster Speed')
+plt.show()
+```
+<img src="https://user-images.githubusercontent.com/121735588/230256322-5ed9d29f-ae77-44a6-8eed-78dae704ede6.png" alt="kaggleLogo" height="250">
+
+##### ▶️ [View the full Notebook code](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+----
+
+## 🔹'Rob sleep predictions' Kaggle competition to predict his sleep patterns using a sample dataset.
+You can find Rob's profile on kaggle [here](https://www.kaggle.com/robikscube)
+
+This is the first Kaggle competition I have entered, and the first time I have tried using predictive models.
+
+##### ▶️ You can view the full current model and output of my Entry [HERE](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/rob-sleep-predictions.ipynb)
+
+*I have gone through about 30 iterations of this model. Trying to Both increase my overall score, 
+AND figure out what the heck I am doing.*
+
+### When we first look at the data we can see there is an outlier. 
+Its bad enough that we need to fix it. It turns out the data during this time was doubled.
+
+```python
+plt.figure(figsize=(10, 8))
+sns.lineplot(data=train, x='date', y='sleep_hours')
+plt.xlabel('Date')
+plt.ylabel('Sleep Hours')
+plt.title('Sleep Hours over Time')
+plt.grid()
+
+
+plt.show()
+```
+<img src="https://user-images.githubusercontent.com/121735588/230258657-fcfaed1e-3537-483d-b1af-ec7f2c74b19d.png" alt="kaggleLogo" height="300">
+
+↘️ We need to find these dates so we can remove them
+```python
+sleep_over_13 = train[train.sleep_hours > 13]
+
+
+min_date = sleep_over_13.date.min()
+max_date = sleep_over_13.date.max()
+
+print(f"Minimum date where sleep time was over 13 hours: {min_date}")
+print(f"Maximum date where sleep time was over 13 hours: {max_date}")
+```
+```
+RESULTS:
+Minimum date where sleep time was over 13 hours: 2017-09-29 00:00:00
+Maximum date where sleep time was over 13 hours: 2018-06-12 00:00:00
+```
+
+🔸 Lets remove these dates
+```python
+train_copy = train.copy()
+
+doubled_hours = train_copy[(train_copy.date >= '2017-09-28') & (train_copy.date <= '2018-06-12')]
+
+train_copy.loc[doubled_hours.index, 'sleep_hours'] = doubled_hours.sleep_hours / 2
+```
+
+### ↘️Results:
+<img src="https://user-images.githubusercontent.com/121735588/230259336-fd52c606-95b4-4478-903d-a8e0d637064d.png" alt="kaggleLogo" height="200">
+
+### I then adjusted hours for Holidays and weekends manually. I played with these values until I got something that gave me the best results.
+
+##### ▶️ You can view the full current model and output of my Entry [HERE](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/rob-sleep-predictions.ipynb)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
