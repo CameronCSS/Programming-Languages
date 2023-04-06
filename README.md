@@ -27,6 +27,15 @@
 
 &nbsp; &nbsp;:arrow_right_hook: - Learned the power of Pandas and PyQt5 libraries. Also learned the importance of notating code for Bug fixing in the future.
 
+## Kaggle Notebooks
+[Roller Coaster data exploration](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
+
+↪️ - Explored and database of roller coaster information that dates back to the early 1900s.
+
+[Rob sleep predictions](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/rob-sleep-predictions.ipynb)
+
+↪️ - [Rob Mulla's](https://www.kaggle.com/robikscube) Kaggle competition to predict his sleep patterns using a sample dataset.
+
 ## R* Projects
 <a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Comparing%20Phone%20Prices%20in%20R" target="new">Comparing Phone Prices in R</a>
 
