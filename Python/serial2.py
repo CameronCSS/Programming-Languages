@@ -1,4 +1,4 @@
-## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer
+## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer --hidden-import win32com --hidden-import win32com.client
 
 import tkinter as tk 
 from tkinter import filedialog, messagebox, ttk 
