@@ -1,28 +1,34 @@
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
+from tkinter import filedialog, messagebox, ttk
 import pandas as pd
+import difflib
 
 file_paths = []
 
+def close_match(col_name, column_list):
+    best_match = difflib.get_close_matches(col_name, column_list, n=1, cutoff=0.6)
+    return best_match[0] if best_match else col_name
+
 def process_data():
     combined_df = pd.DataFrame()  # Combined dataframe to store all data
+
+    target_columns = ['fridge', 'range', 'microwave', 'dishwasher', 'washer', 'dryer']
     
     for file_path in file_paths:
         df = pd.read_excel(file_path)
-
-        columns = ['Fridge', 'Range', 'Microwave', 'Dishwasher ', 'Washer', 'Dryer']
-        for col in columns:
-            df[col] = df[col].astype(str).str.upper()
-
-        for col in columns:
-            df[col] = df[col].str.replace('-', '').str.replace(',', '').str.replace('.', '').str.replace(' ', '').str.replace('AND', 'N').str.replace('IS', '').str.replace('ARE', 'R').str.replace('IF', 'F').str.replace('SEA', 'C').str.replace('FP', 'FB')
-
-        df['Unit'] = df['Unit'].astype(int)
+        df.columns = [col.lower() for col in df.columns] # convert column names to lowercase
+        df.columns = [close_match(col, target_columns) for col in df.columns] # match to target columns if close
         
-        combined_df = combined_df.append(df)  # Append data to combined dataframe
+        for col in target_columns:
+            if col in df.columns: # make sure this column exists in df
+                df[col] = df[col].astype(str).str.upper().str.replace('-', '').str.replace(',', '').str.replace('.', '').str.replace(' ', '').str.replace('AND', 'N').str.replace('IS', '').str.replace('ARE', 'R').str.replace('IF', 'F').str.replace('SEA', 'C').str.replace('FP', 'FB')
 
-    combined_df = combined_df.sort_values(by='Unit', ascending=True)
+        if 'unit' in df.columns: # make sure 'unit' column exists in df
+            df['unit'] = df['unit'].astype(int)
+        
+        combined_df = pd.concat([combined_df, df])  # Append data to combined dataframe
+
+    combined_df = combined_df.sort_values(by='unit', ascending=True)
     combined_df = combined_df.reset_index(drop=True)
     
     if not combined_df.empty:
@@ -45,14 +51,24 @@ def process_files():
     else:
         messagebox.showwarning("Warning", "No files selected.")
 
-
 root = tk.Tk()
 root.title("Serial Number Processing")
 
-button_pick = tk.Button(root, text="Pick Excel File(s)", command=pick_files)
-button_pick.pack(pady=20)
+# Set window size, background color and icon
+root.geometry("350x250")  # Width x Height
+root.configure(background='darkgray')
 
-button_process = tk.Button(root, text="Process and Save", command=process_files)
-button_process.pack(pady=10)
+# Add a frame
+frame = tk.Frame(root, bg='darkgray')
+frame.place(relx=0.5, rely=0.5, anchor='center')
+
+button_style = ttk.Style()
+button_style.configure('TButton', font=('calibri', 11, 'bold'), borderwidth='4')
+
+button_pick = ttk.Button(frame, text="Pick Excel File(s)", command=pick_files)
+button_pick.pack(side="left", padx=(0, 20))
+
+button_process = ttk.Button(frame, text="Process and Save", command=process_files)
+button_process.pack(side="right")
 
 root.mainloop()
