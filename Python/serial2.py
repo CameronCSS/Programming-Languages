@@ -38,6 +38,7 @@ def process_data():
     
     return combined_df
 
+
 def save_data():
     combined_df = process_data()
 
@@ -72,13 +73,15 @@ def preview_data():
         for index, row in combined_df.iterrows():
             preview_tree.insert('', 'end', values=list(row))
 
-        preview_tree.pack()
+        preview_tree.grid(row=1, column=0)
+        label_preview.grid()
 
 def pick_files(): 
     files = filedialog.askopenfilenames() 
     if files: 
         file_paths.clear()
         file_paths.extend(files) 
+        preview_data()
 
 def process_files(): 
     if file_paths: 
@@ -104,16 +107,19 @@ button_pick.pack(side="left", padx=(0, 20))
 button_process = ttk.Button(frame, text="Process and Save", command=process_files)
 button_process.pack(side="right")
 
-button_preview = ttk.Button(frame, text="Preview Data", command=preview_data)
-button_preview.pack(side="bottom", padx=(0, 20))
-
-# Create a new frame for the Treeview
 preview_frame = tk.Frame(root, bg='darkgray')
 preview_frame.place(relx=0.5, rely=0.6, anchor='center')
+
+label_preview = ttk.Label(preview_frame, text="Preview:", font=("Arial", 18))
+label_preview.grid(row=0, column=0, pady=(20, 0))
+label_preview.grid_remove()
 
 preview_tree = ttk.Treeview(preview_frame, columns=target_columns + ['Unit'], show='headings', height=10)
 
 for column in target_columns + ['Unit']:
     preview_tree.heading(column, text=column)
+
+preview_tree.grid(row=1, column=0)
+preview_tree.grid_remove()
 
 root.mainloop()
