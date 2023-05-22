@@ -14,35 +14,37 @@ def close_match(col_name, column_list):
     return best_match[0] if best_match else col_name 
 
 def process_data(): 
-    combined_df = pd.DataFrame()  # Combined dataframe to store all data 
+    combined_df = pd.DataFrame()
 
-    target_columns = ['fridge', 'range', 'microwave', 'dishwasher', 'washer', 'dryer'] 
+    target_columns = ['Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer'] 
 
     for file_path in file_paths: 
         df = pd.read_excel(file_path) 
-        df.columns = [col.lower() for col in df.columns] # convert column names to lowercase 
-        df.columns = [close_match(col, target_columns) for col in df.columns] # match to target columns if close 
+        df.columns = [col.lower() for col in df.columns]
+        df.columns = [close_match(col, target_columns) for col in df.columns] 
 
         for col in target_columns: 
-            if col in df.columns: # make sure this column exists in df 
+            if col in df.columns:
                 df[col] = df[col].astype(str).str.upper().str.replace('-', '').str.replace(',', '').str.replace('.', '').str.replace(' ', '').str.replace('AND', 'N').str.replace('IS', '').str.replace('ARE', 'R').str.replace('IF', 'F').str.replace('SEA', 'C').str.replace('FP', 'FB') 
 
-        if 'unit' in df.columns: # make sure 'unit' column exists in df 
+        if 'unit' in df.columns:
             df['unit'] = df['unit'].astype(int) 
 
-        combined_df = pd.concat([combined_df, df])  # Append data to combined dataframe 
+        combined_df = pd.concat([combined_df, df])
 
     combined_df = combined_df.sort_values(by='unit', ascending=True) 
-    combined_df = combined_df.reset_index(drop=True) 
+    combined_df = combined_df.reset_index(drop=True)
+    combined_df = combined_df.rename(columns={'unit': 'Unit'})
+
 
     if not combined_df.empty: 
-        output_file = filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serial Numbers") 
+        output_file = filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serials") 
         if output_file: 
             combined_df.to_excel(output_file, index=False)
             excel = client.Dispatch("Excel.Application")
             workbook = excel.Workbooks.Open(output_file)
             workbook.Worksheets[0].Columns.AutoFit()
-            output_pdf_file = filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serial Numbers PDF")
+            output_pdf_file = filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serials")
 
             if output_pdf_file:
                 workbook.Worksheets[0].ExportAsFixedFormat(0, output_pdf_file)
@@ -56,7 +58,7 @@ def process_data():
 def pick_files(): 
     files = filedialog.askopenfilenames() 
     if files: 
-        file_paths.clear()  # Clear the existing file paths 
+        file_paths.clear()
         file_paths.extend(files) 
 
 def process_files(): 
