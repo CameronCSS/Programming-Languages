@@ -1,14 +1,35 @@
 ## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer
 
+## pyinstaller --noconsole --noconfirm serials.py --onedir --onefile --windowed --add-data "c:/users/leaf3/appdata/local/programs/python/python310/lib/site-packages/customtkinter;customtkinter/" --hidden-import openpyxl.cell._writer
+
+import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
 import pandas as pd
 import difflib
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+from pyhtml2pdf import converter
+import os
 
 file_paths = []
 target_columns = ['Unit', 'Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer']
+tab_names = ["Preview", "Details"]
+data_loaded_label = None
+
+class CustomDialog(tk.Toplevel):
+    def __init__(self, master=None, title=None, message=None):
+        super().__init__(master)
+        self.title(title)
+        self.frame = tk.Frame(self)
+        self.frame.pack(fill="both", expand=True, padx=20, pady=20)
+        self.message_label = ctk.CTkLabel(self.frame, text=message, font=("calibri", 12))
+        self.message_label.pack(pady=20)
+        self.ok_button = ctk.CTkButton(self.frame, text="OK", command=self.close)
+        self.ok_button.pack(pady=20)
+
+    def close(self):
+        self.destroy()
+
 
 def close_match(col_name, column_list):
     best_match = difflib.get_close_matches(col_name, column_list, n=1, cutoff=0.6)
@@ -38,50 +59,69 @@ def save_data():
 
     if not combined_df.empty:
         combined_df.drop_duplicates(inplace=True)
-        output_file = filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serial Numbers")
+        output_file = ctk.filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serial Numbers")
         if output_file:
             combined_df.replace({pd.NA: 'N/A', 'NAN': 'N/A'}, inplace=True)
             combined_df.to_excel(output_file, index=False)
             auto_fit_columns(output_file)
-            messagebox.showinfo("Success", "Processing completed successfully!")
+
+            html_file = output_file.replace(".xlsx", ".html")
+            combined_df.to_html(html_file, index=False)
+
+            # Add CSS styling
+            css = """
+            <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: center;
+            }
+            </style>
+            """
+            
+            # Read the HTML file
+            with open(html_file, 'r') as file:
+                html_content = file.read()
+
+            # Insert the CSS styling
+            html_content_with_css = css + html_content
+
+            # Write the modified HTML file
+            with open(html_file, 'w') as file:
+                file.write(html_content_with_css)
+
+            output_pdf_file = ctk.filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serials")
+            if output_pdf_file:
+                converter.convert(html_file, output_pdf_file)
+                CustomDialog(app, "Success", "Processing completed successfully!")
+
+                # Close the application and delete the HTML file
+                app.destroy()
+                os.remove(html_file)
     else:
-        messagebox.showwarning("Warning", "No files selected.")
+        CustomDialog(app, "Warning", "No files selected.")
 
-def preview_data(): 
-    combined_df = process_data()
 
-    for i in preview_tree.get_children():
-        preview_tree.delete(i)
+def pick_files():
+    global data_loaded_label
 
-    if not combined_df.empty:
-        combined_df = combined_df[['Unit', 'Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer']]
-
-        preview_tree["columns"] = combined_df.columns.tolist()
-
-        for column in combined_df.columns:
-            if column.lower() == 'unit':
-                preview_tree.heading(column, text='Unit')
-            else:
-                preview_tree.heading(column, text=column)
-
-        for index, row in combined_df.iterrows():
-            preview_tree.insert('', 'end', values=list(row))
-
-        preview_tree.grid(row=1, column=0)
-        label_preview.grid()
-
-def pick_files(): 
-    files = filedialog.askopenfilenames() 
-    if files: 
+    files = ctk.filedialog.askopenfilenames()
+    if files:
         file_paths.clear()
-        file_paths.extend(files) 
-        preview_data()
+        file_paths.extend(files)
+        data_loaded_label.configure(text="DATA LOADED. You can now save the files.")
+    
 
-def process_files(): 
-    if file_paths: 
-        save_data() 
-    else: 
-        messagebox.showwarning("Warning", "No files selected.") 
+def process_files():
+    if file_paths:
+        save_data()
+    else:
+        CustomDialog(app, "Warning", "No files selected.")
 
 def auto_fit_columns(file_path):
     wb = load_workbook(file_path)
@@ -101,37 +141,22 @@ def auto_fit_columns(file_path):
     wb.save(file_path)
     wb.close()
 
-root = tk.Tk()
-root.title("Serial Number Processing")
+app = ctk.CTk()
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+app.geometry("350x250")  # Adjust the window size here
+app.title("Serial Number Processing")
 
-root.geometry("1500x800")
-root.configure(background='darkgray')
-
-frame = tk.Frame(root, bg='darkgray')
+frame = ctk.CTkFrame(app)
 frame.place(relx=0.5, rely=0.3, anchor='center')
 
-button_style = ttk.Style()
-button_style.configure('TButton', font=('calibri', 11, 'bold'), borderwidth='4')
+data_loaded_label = ctk.CTkLabel(master=frame, text="")
+data_loaded_label.pack(pady=(50, 10))
 
-button_pick = ttk.Button(frame, text="Pick Excel File(s)", command=pick_files)
+button_pick = ctk.CTkButton(master=frame, text="Pick Excel File(s)", command=pick_files, font=('calibri', 11, 'bold'))
 button_pick.pack(side="left", padx=(0, 20))
 
-button_process = ttk.Button(frame, text="Process and Save", command=process_files)
+button_process = ctk.CTkButton(master=frame, text="Process and Save", command=process_files, font=('calibri', 11, 'bold'))
 button_process.pack(side="right")
 
-preview_frame = tk.Frame(root, bg='darkgray')
-preview_frame.place(relx=0.5, rely=0.6, anchor='center')
-
-label_preview = ttk.Label(preview_frame, text="Preview:", font=("Arial", 18))
-label_preview.grid(row=0, column=0, pady=(20, 0))
-label_preview.grid_remove()
-
-preview_tree = ttk.Treeview(preview_frame, columns=target_columns + ['Unit'], show='headings', height=10)
-
-for column in target_columns + ['Unit']:
-    preview_tree.heading(column, text=column)
-
-preview_tree.grid(row=1, column=0)
-preview_tree.grid_remove()
-
-root.mainloop()
+app.mainloop()
