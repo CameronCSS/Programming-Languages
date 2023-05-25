@@ -1,9 +1,9 @@
 ## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer
 
-## pyinstaller --noconsole --noconfirm serials.py --onedir --onefile --windowed --add-data "c:/users/leaf3/appdata/local/programs/python/python310/lib/site-packages/customtkinter;customtkinter/" --hidden-import openpyxl.cell._writer
+## pyinstaller --noconsole --noconfirm serials.py --onefile --hidden-import openpyxl.cell._writer
 
-import customtkinter as ctk
 import tkinter as tk
+from tkinter import filedialog, messagebox, ttk
 import pandas as pd
 import difflib
 from openpyxl import load_workbook
@@ -15,20 +15,6 @@ file_paths = []
 target_columns = ['Unit', 'Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer']
 tab_names = ["Preview", "Details"]
 data_loaded_label = None
-
-class CustomDialog(tk.Toplevel):
-    def __init__(self, master=None, title=None, message=None):
-        super().__init__(master)
-        self.title(title)
-        self.frame = tk.Frame(self)
-        self.frame.pack(fill="both", expand=True, padx=20, pady=20)
-        self.message_label = ctk.CTkLabel(self.frame, text=message, font=("calibri", 12))
-        self.message_label.pack(pady=20)
-        self.ok_button = ctk.CTkButton(self.frame, text="OK", command=self.close)
-        self.ok_button.pack(pady=20)
-
-    def close(self):
-        self.destroy()
 
 
 def close_match(col_name, column_list):
@@ -59,7 +45,7 @@ def save_data():
 
     if not combined_df.empty:
         combined_df.drop_duplicates(inplace=True)
-        output_file = ctk.filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serial Numbers")
+        output_file = filedialog.asksaveasfilename(defaultextension=".xlsx", initialfile="Processed Serial Numbers")
         if output_file:
             combined_df.replace({pd.NA: 'N/A', 'NAN': 'N/A'}, inplace=True)
             combined_df.to_excel(output_file, index=False)
@@ -95,33 +81,37 @@ def save_data():
             with open(html_file, 'w') as file:
                 file.write(html_content_with_css)
 
-            output_pdf_file = ctk.filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serials")
+            output_pdf_file = filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serials")
             if output_pdf_file:
                 converter.convert(html_file, output_pdf_file)
-                CustomDialog(app, "Success", "Processing completed successfully!")
+                messagebox.showinfo("Success", "Processing completed successfully!")
 
-                # Close the application and delete the HTML file
-                app.destroy()
+                root.destroy()
                 os.remove(html_file)
     else:
-        CustomDialog(app, "Warning", "No files selected.")
+        messagebox.showwarning("Warning", "No files selected.") 
 
 
 def pick_files():
     global data_loaded_label
 
-    files = ctk.filedialog.askopenfilenames()
+    files = filedialog.askopenfilenames()
     if files:
         file_paths.clear()
         file_paths.extend(files)
-        data_loaded_label.configure(text="DATA LOADED. You can now save the files.")
-    
+        data_loaded_label1 = tk.Label(root, text="DATA LOADED. You can now save the files.", fg="red")
+        data_loaded_label1.pack(pady=10)
+
+        data_loaded_label2 = tk.Label(root, text="Program will close after completed", fg="blue")
+        data_loaded_label2.pack(pady=10)
+
 
 def process_files():
     if file_paths:
         save_data()
     else:
-        CustomDialog(app, "Warning", "No files selected.")
+        messagebox.showwarning("Warning", "No files selected.") 
+
 
 def auto_fit_columns(file_path):
     wb = load_workbook(file_path)
@@ -141,22 +131,21 @@ def auto_fit_columns(file_path):
     wb.save(file_path)
     wb.close()
 
-app = ctk.CTk()
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
-app.geometry("350x250")  # Adjust the window size here
-app.title("Serial Number Processing")
+root = tk.Tk()
+root.title("Serial Number Processing")
 
-frame = ctk.CTkFrame(app)
-frame.place(relx=0.5, rely=0.3, anchor='center')
+root.geometry("350x250")
+root.configure(background='darkgray')
 
-data_loaded_label = ctk.CTkLabel(master=frame, text="")
-data_loaded_label.pack(pady=(50, 10))
+frame = tk.Frame(root, bg='darkgray')
+frame.place(relx=0.5, rely=0.5, anchor='center')
 
-button_pick = ctk.CTkButton(master=frame, text="Pick Excel File(s)", command=pick_files, font=('calibri', 11, 'bold'))
-button_pick.pack(side="left", padx=(0, 20))
+button_pick = tk.Button(root, text="Pick Excel File(s)", command=pick_files)
+button_pick.pack(pady=20)
 
-button_process = ctk.CTkButton(master=frame, text="Process and Save", command=process_files, font=('calibri', 11, 'bold'))
-button_process.pack(side="right")
+button_process = tk.Button(root, text="Process and Save", command=process_files)
+button_process.pack(pady=10)
 
-app.mainloop()
+data_loaded_label = tk.Label(root) # Initialize the data_loaded_label
+
+root.mainloop()
