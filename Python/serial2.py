@@ -145,3 +145,5 @@ button_process = tk.Button(root, text="Process and Save", command=process_files)
 button_process.pack(pady=10)
 
 data_loaded_label = tk.Label(root) # Initialize the data_loaded_label
+
+root.mainloop()
