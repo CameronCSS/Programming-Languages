@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer
+
+>>>>>>> 8092570415752499015f52e25b44fe7c4dfaffe3
 ## pyinstaller --noconsole --noconfirm serials.py --onefile --hidden-import openpyxl.cell._writer
 
 import tkinter as tk
@@ -146,4 +151,8 @@ button_process.pack(pady=10)
 
 data_loaded_label = tk.Label(root) # Initialize the data_loaded_label
 
+<<<<<<< HEAD
 root.mainloop()
+=======
+root.mainloop()
+>>>>>>> 8092570415752499015f52e25b44fe7c4dfaffe3
