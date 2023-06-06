@@ -33,6 +33,15 @@ def process_data():
         except PermissionError:
             messagebox.showerror("Error", f"No permission to read the file: {file_path}")
             continue  # Skip to the next file
+        except IOError:
+            messagebox.showerror("Error", f"IOError occurred while reading the file: {file_path}")
+            continue  # Skip to the next file
+        except OSError:
+            messagebox.showerror("Error", f"OSError occurred while reading the file: {file_path}")
+            continue  # Skip to the next file
+        except Exception as e:
+            messagebox.showerror("Error", f"An unknown error occurred while reading the file: {file_path}. Error: {str(e)}")
+            continue  # Skip to the next file
         df.columns = [col.lower() for col in df.columns]
         df.columns = [close_match(col, target_columns) for col in df.columns]
 
@@ -66,6 +75,9 @@ def save_data():
             
             # Ask for output file name for the PDF and use it for temporary Excel and HTML files
             output_pdf_file = filedialog.asksaveasfilename(defaultextension=".pdf", initialfile="Serials")
+            if not output_pdf_file:
+                output_pdf_file = "processed_serials.pdf"
+
             if output_pdf_file:
                 processing_label = tk.Label(root, text="Processing... Please Wait", fg="blue")
                 processing_label.pack(pady=10)
@@ -107,8 +119,12 @@ def save_data():
                 # Write the modified HTML file
                     with open(html_file, 'w') as file:
                         file.write(html_content_with_css)
+                except IOError:
+                    messagebox.showerror("Error", f"IOError occurred while trying to write to the file: {html_file}")
+                except OSError:
+                    messagebox.showerror("Error", f"OSError occurred while trying to write to the file: {html_file}")
                 except Exception as e:
-                    messagebox.showerror("Error", f"An error occurred while trying to write to the file: {str(e)}")
+                    messagebox.showerror("Error", f"An unknown error occurred while trying to write to the file: {html_file}. Error: {str(e)}")
 
                 converter.convert(html_file, output_pdf_file)
                 messagebox.showinfo("Success", "Processing completed successfully!")
