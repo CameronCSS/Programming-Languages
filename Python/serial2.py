@@ -1,7 +1,4 @@
-## pyinstaller --noconsole serials.py --onefile --hidden-import openpyxl.cell._writer
-
-## pyinstaller --windowed serials.py --onefile --hidden-import openpyxl.cell._writer
-
+## pyinstaller --windowed serials.py --onefile --hidden-import openpyxl.cell._writer --hidden-import pyhtml2pdf --hidden-import pdfkit
 
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
@@ -51,6 +48,7 @@ def process_data():
     return combined_df
 
 def save_data():
+    processing_completed = False  # Flag to track if processing completed successfully
     try:
         combined_df = process_data()
         global data_loaded_label1
@@ -112,6 +110,8 @@ def save_data():
                 converter.convert(html_file, output_pdf_file)
                 messagebox.showinfo("Success", "Processing completed successfully!")
 
+                processing_completed = True  # Processing completed successfully
+
                 root.after(1000, root.destroy)  # Delay closing the app by 1 second
 
                 # Attempt to delete the temporary files
@@ -131,8 +131,16 @@ def save_data():
     except Exception as e:
         # An error occurred, show an error message
         messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
-        # Attempt to delete the files in case of error
-        delete_files()
+    finally:
+        if not processing_completed:
+            # Delete the temporary files if processing did not complete successfully
+            try:
+                if os.path.exists(html_file):
+                    os.remove(html_file)
+                if os.path.exists(output_file):
+                    os.remove(output_file) 
+            except Exception as e:
+                print(f"Failed to delete files: {e}")
 
 
 
