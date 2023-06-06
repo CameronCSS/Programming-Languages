@@ -103,9 +103,12 @@ def save_data():
                 # Insert the CSS styling
                 html_content_with_css = css + html_content
 
+                try:
                 # Write the modified HTML file
-                with open(html_file, 'w') as file:
-                    file.write(html_content_with_css)
+                    with open(html_file, 'w') as file:
+                        file.write(html_content_with_css)
+                except Exception as e:
+                    messagebox.showerror("Error", f"An error occurred while trying to write to the file: {str(e)}")
 
                 converter.convert(html_file, output_pdf_file)
                 messagebox.showinfo("Success", "Processing completed successfully!")
@@ -141,6 +144,7 @@ def save_data():
                     os.remove(output_file) 
             except Exception as e:
                 print(f"Failed to delete files: {e}")
+            root.quit()
 
 
 
