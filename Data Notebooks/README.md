@@ -4,7 +4,7 @@
   <img src="https://user-images.githubusercontent.com/121735588/230251107-9d79cd40-2d07-4dfd-b05b-b26f8d08921f.png" alt="kaggleLogo" width="200">
 
 
-  <h2 align="center">Kaggle Notebooks</h2>
+  <h2 align="center">Jupyter (Data) Notebooks</h2>
   <p align="center">Programming-Languages
   All of my python Notebook code :computer: and practice projects will be here.
    <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
@@ -14,9 +14,41 @@
   </p>
 </div>
 
-## Kaggle Notebooks
+# Jupyter Notebooks
+〰️ Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
+
+## Python Job Scraping
+
+Using Beautiful soup and requests_html I was able to scrape python job data from [https://pythonjobs.github.io/](https://pythonjobs.github.io/)
+
+This is the first project I used pagination to explore linked pages to gather even more information about each job.
+
+*CODE SNIPPET*
+↘️
+```python
+job_card = soup.find_all('div', class_='job')
+
+for job_element in job_card:
+    title_element = job_element.find("h1")
+    location_element = job_element.find_all("span", class_="info")
+    company_element = location_element[3].get_text(strip=True) if len(location_element) > 3 else "N/A" # all the "i class" spans are called the same thing. The fourth one is the company so we specify [3]
+    detail_element = job_element.find("p", class_="detail")
+
+    print("Title:", title_element.text.strip())
+    print("Location:", location_element[0].text.strip()) # all the "i class" spans are called the same thing. The first one is the actual location
+    print("Company:", company_element)
+    print("Details:", detail_element.text.strip())
+    print()  # Add an empty line for spacing between job listings
+```
+
+You can explore the full Notebook and code [HERE](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Python%20Job%20scraping.ipynb)
+
+
+--------------
+
+# Kaggle Notebooks
 〰️ I have really started to enjoy using Kaggle Notebooks because of the ability to load them up no matter where I am. 
-Dont need to install anything. Also you can instally load in data sets from Kaggle. Its a really convenient tool. 
+Dont need to install anything. Also you can instally load in data sets from Kaggle. Its a really convenient tool.
 
 ## 🔹Roller Coaster data exploration
 
