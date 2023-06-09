@@ -4,7 +4,7 @@
   <img src="https://github.com/CameronCSS/Programming-Languages/assets/121735588/12929bf3-b722-46e8-bb00-39ca8d317858" alt="kaggleLogo" width="200">
 
   <h2 align="center">Jupyter (Data) Notebooks</h2>
-  <p align="center">Programming-Languages
+  <p align="center">
   All of my python Notebook code :computer: and practice projects will be here.
    <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
 <br>
