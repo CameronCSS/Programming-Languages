@@ -14,7 +14,11 @@
 </div>
 
 # Jupyter Notebooks
-〰️ Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
+
+#### Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
+
+<br>
+<br>
 
 ## Python Job Scraping
 
