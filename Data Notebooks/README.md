@@ -18,7 +18,32 @@
 #### Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
 
 <br>
-<br>
+
+## Price Comparison using Selenium
+
+Using Selenium and python I scraped products and their prices from the first page of two websites based on search input the user enters.
+
+The prices are then averaged and compared from the two websites to see which one has better pricing.
+
+*CODE SNIPPET*
+↘️
+```python
+    print(f"Average price on {website1_name}: ${average_website1:.2f}")
+    min_price, max_price = get_min_max(prices_website1)
+    if min_price and max_price:
+        print(f"Lowest price on {website1_name}: {min_price['name']} at ${min_price['price']:.2f}")
+        print(f"Highest price on {website1_name}: {max_price['name']} at ${max_price['price']:.2f}")
+
+    print(f"\nAverage price on {website2_name}: ${average_website2:.2f}")
+    min_price, max_price = get_min_max(prices_website2)
+    if min_price and max_price:
+        print(f"Lowest price on {website2_name}: {min_price['name']} at ${min_price['price']:.2f}")
+        print(f"Highest price on {website2_name}: {max_price['name']} at ${max_price['price']:.2f}")
+```
+
+Full Notebook and code [HERE](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Price%20Comparison.ipynb)
+
+------------
 
 ## Python Job Scraping
 
