@@ -1,11 +1,10 @@
 <a name="readme-top"></a>
 <div align="center">
 
-  <img src="https://user-images.githubusercontent.com/121735588/230251107-9d79cd40-2d07-4dfd-b05b-b26f8d08921f.png" alt="kaggleLogo" width="200">
-
+  <img src="https://github.com/CameronCSS/Programming-Languages/assets/121735588/12929bf3-b722-46e8-bb00-39ca8d317858" alt="kaggleLogo" width="200">
 
   <h2 align="center">Jupyter (Data) Notebooks</h2>
-  <p align="center">Programming-Languages
+  <p align="center">
   All of my python Notebook code :computer: and practice projects will be here.
    <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
 <br>
@@ -15,7 +14,11 @@
 </div>
 
 # Jupyter Notebooks
-〰️ Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
+
+#### Jupyter Notebooks are highly useful for running Python projects as they allow for the execution of code in a step-by-step manner, visualizing data, documenting the project workflow, and facilitating collaboration, making it ideal for data analysis, prototyping, and presenting results.
+
+<br>
+<br>
 
 ## Python Job Scraping
 
