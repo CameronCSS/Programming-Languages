@@ -1,7 +1,10 @@
 import streamlit as st
 from datetime import date
 from openpyxl import Workbook
-from scraper import compare_prices  # Assuming the scraping function is in a separate file "scraper.py"
+from scraper import compare_prices
+import subprocess
+
+subprocess.run(['pip', 'install', 'openpyxl'])
 
 def save_to_excel(prices, search_word):
     filename = 'prices.xlsx'
