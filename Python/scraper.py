@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from datetime import date
-from openpyxl import Workbook
 
 def scrape_website(url, word):
     driver = webdriver.Chrome()
