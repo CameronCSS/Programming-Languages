@@ -110,30 +110,6 @@ def compare_prices(word):
     print(f"\nPrice Comparison: {website1_name} is {'cheaper' if average_website1 < average_website2 else 'more expensive' if average_website1 > average_website2 else 'equally priced'} than {website2_name} by ${price_diff:.2f}")
 
 
-    filename = 'prices.xlsx'
-    file_exists = os.path.exists(filename)
-
-    wb = Workbook()
-
-    # First sheet
-    sheet1 = wb.active
-    sheet1.title = 'Item Prices'
-    if not file_exists:
-        sheet1.append(['Website', 'Item', 'Name', 'Price', 'Date Added'])
-    current_date = date.today().strftime('%m/%d/%Y')
-    for item in prices_website1:
-        sheet1.append([website1_name, word, item['name'], item['price'], current_date])
-    for item in prices_website2:
-        sheet1.append([website2_name, word, item['name'], item['price'], current_date])
-
-    # Second sheet
-    sheet2 = wb.create_sheet(title='Compared')
-    if not file_exists:
-        sheet2.append(['Item', 'Avg Price 1', 'Avg Price 2', 'Price Difference', 'Date Added'])
-    current_date = date.today().strftime('%m/%d/%Y')
-    sheet2.append([word, website1_name + ': ' + str(rounded_average_website1), website2_name + ': ' + str(rounded_average_website2), price_diff, current_date])
-
-    wb.save(filename)
 
 search_word = input("Enter word to search: ")
 compare_prices(search_word)
