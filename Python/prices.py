@@ -4,8 +4,6 @@ from openpyxl import Workbook
 from scraper import compare_prices
 import subprocess
 
-subprocess.run(['pip', 'install', 'openpyxl'])
-
 def save_to_excel(prices, search_word):
     filename = 'prices.xlsx'
     file_exists = os.path.exists(filename)
@@ -35,6 +33,7 @@ def main():
 
     search_word = st.text_input("Enter word to search:")
     if st.button("Compare Prices"):
+        subprocess.run(['pip', 'install', 'openpyxl'])  # Install openpyxl package
         prices = compare_prices(search_word)
         save_to_excel(prices, search_word)
         st.subheader(f"Search Results for '{search_word}':")
