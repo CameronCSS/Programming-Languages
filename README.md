@@ -28,9 +28,13 @@
 &nbsp; &nbsp;:arrow_right_hook: - Learned the power of Pandas and PyQt5 libraries. Also learned the importance of notating code for Bug fixing in the future.
 
 ## [Jupyter Notebooks](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/README.md)
-[Python Job Web scraping](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Python%20Job%20scraping.ipynb)
+[Review Sentiment Analysis](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Review%20Sentiment%20Analysis.ipynb)
 
-↪️ - Explored and database of roller coaster information that dates back to the early 1900s.
+↪️ - Scraped review data from two competing websites and analyzed overall sentiment of each review. Used nltk VADER model and huggingface RoBERTa moedl to score reviews.
+
+[Price Comparison using Selenium](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Price%20Comparison.ipynb)
+
+↪️ - Using Selenium and python I scraped products and their prices from the first page of two websites based on search input the user enters. The prices are then averaged and compared from the two websites to see which one has better pricing.
 
 [Roller Coaster data exploration](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Kaggle_Coasters.ipynb)
 
