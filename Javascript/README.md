@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 <div align="center">
 
-  <img src="https://user-images.githubusercontent.com/121735588/220015374-100076ed-1e95-4cc7-a67a-1be1c0a31dba.png" alt="pythonLogo" width="200" height="200">
+  <img src="https://user-images.githubusercontent.com/121735588/220015374-100076ed-1e95-4cc7-a67a-1be1c0a31dba.png" alt="javascriptLogo" width="200" height="200">
 
 
 
@@ -11,7 +11,7 @@
    <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
 <br>
     <br>
-     <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong>« Back to Portfolio</strong></a>
+     <a href="https://github.com/CameronCSS/PersonalProjects"><strong>« Back to Project Portfolio</strong></a>
   </p>
 </div>
 
