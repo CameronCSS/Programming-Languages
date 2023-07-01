@@ -1,5 +1,3 @@
-pip install beautifulsoup4 selenium undetected-chromedriver streamlit
-
 import streamlit as st
 import time
 import re
