@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Comparison Result</title>
+</head>
+<body>
+    <h1>Price Comparison Result</h1>
+    {% if results %}
+        <p>Model #: {{ results[0]['model_number'] }}</p>
+        {% for item in results[0:] %}
+            <p>{{ item['website'] }}, Price: {{ item['price'] }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No items found.</p>
+    {% endif %}
+</body>
+</html>
+    

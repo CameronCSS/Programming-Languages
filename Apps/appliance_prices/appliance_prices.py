@@ -1,3 +1,4 @@
+from flask import Flask, render_template, request
 import time
 import re
 from bs4 import BeautifulSoup
@@ -9,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import undetected_chromedriver as uc
 
+app = Flask(__name__, template_folder='.')
 
 def scrape_website(url, word):
     options = uc.ChromeOptions()
@@ -17,7 +19,12 @@ def scrape_website(url, word):
     driver.get(url)
 
     if "homedepot.com" in url:
-        input_field = driver.find_element(By.ID, 'headerSearch')
+        try:
+            input_field = driver.find_element(By.ID, 'headerSearch')
+        except NoSuchElementException:
+            input_field = driver.find_element(By.CSS_SELECTOR, 'input[name="keyword"]')
+
+        time.sleep(1)
         input_field.send_keys(word)
         input_field.send_keys(Keys.ENTER)
 
@@ -137,6 +144,11 @@ def scrape_website(url, word):
 
 
 def compare_prices(word):
+    website1_name = 'Home Depot'
+    website2_name = 'RC Willey'
+    website3_name = 'Lowes'
+    website4_name = 'Best Buy'
+
     website1_url = 'https://www.homedepot.com/'
     website2_url = 'https://www.rcwilley.com/'
     website3_url = 'https://www.lowes.com/'
@@ -147,35 +159,65 @@ def compare_prices(word):
     items_website3 = scrape_website(website3_url, word)
     items_website4 = scrape_website(website4_url, word)
 
+    results = []
+
     if not items_website1:
-        print(f"Model #{word} not found on Home Depot.")
+        results.append(f"Model #: {word}, Price: N/A, Website: {website1_name}")
     else:
         if items_website1[0]['model_number'] == word:
             for item in items_website1:
-                print(f"Model #: {item['model_number']}, Home Depot Price: ${item['price']:.2f}")
+                item['website'] = website1_name
+                price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
+                results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website1_name}")
 
     if not items_website2:
-        print(f"Model #{word} not found on RC Willey.")
+        results.append(f"Model #: {word}, Price: N/A, Website: {website2_name}")
     else:
         for item in items_website2:
-            print(f"Model #: {item['model_number']}, RC Willey Price: ${item['price']:.2f}")
+            item['website'] = website2_name
+            price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
+            results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website2_name}")
 
     if not items_website3:
-        print(f"Model #{word} not found on Lowes.")
+        results.append(f"Model #: {word}, Price: N/A, Website: {website3_name}")
     else:
         for item in items_website3:
-            print(f"Model #: {item['model_number']}, Lowes Price: ${item['price']:.2f}")
+            item['website'] = website3_name
+            price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
+            results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website3_name}")
 
     if not items_website4:
-        print(f"Model #{word} not found on Best Buy.")
+        results.append(f"Model #: {word}, Price: N/A, Website: {website4_name}")
     else:
         if items_website4[0]['model_number'] == word:
             for item in items_website4:
-                print(f"Model #: {item['model_number']}, Best Buy Price: {item['price']}")
+                item['website'] = website4_name
+                results.append(f"Model #: {item['model_number']}, Price: {item['price']}, Website: {website4_name}")
+
+    return results
 
 
-search_word = input("Enter Model #: ")
-search_word = re.sub(r'\W+', '', search_word) # Removes spaces and symbols from the input 
-compare_prices(search_word)
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-# Test model # WM3400CW
+@app.route('/compare', methods=['POST'])
+def compare():
+    search_word = request.form['search_word']
+    search_word = re.sub(r'\W+', '', search_word)
+    results_text = compare_prices(search_word)
+    results = []
+    for text in results_text:
+        match = re.search(r'Model #: (.+), Price: (.+), Website: ([^,]+)', text)
+        if match:
+            model_number = match.group(1)
+            price = match.group(2)
+            website = match.group(3)
+            results.append({'model_number': model_number, 'price': price, 'website': website})
+
+    return render_template('results.html', results=results)
+
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
