@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Appliance Price Comparison</title>
+    <title>Appliance Price Check</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
@@ -103,7 +103,7 @@
     <h1>Price Comparison</h1>
     <div class="form-container">
         <form id="compare_form" action="/compare" method="post" onsubmit="showLoader()">
-            <label for="search_word">Enter Model #:</label>
+            <label for="search_word">Enter exact Model #:</label>
             <input type="text" name="search_word" id="search_word" required>
             <button type="submit">Compare Prices</button>
             <div class="loader-container">
