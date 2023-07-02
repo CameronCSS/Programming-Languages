@@ -1,3 +1,6 @@
+# Added concurrent.futures parallel processing to take run time from 50 seconds down to 16 seconds.
+
+import concurrent.futures
 import time
 import re
 from bs4 import BeautifulSoup
@@ -17,7 +20,12 @@ def scrape_website(url, word):
     driver.get(url)
 
     if "homedepot.com" in url:
-        input_field = driver.find_element(By.ID, 'headerSearch')
+        try:
+            input_field = driver.find_element(By.ID, 'headerSearch')
+        except NoSuchElementException:
+            input_field = driver.find_element(By.CSS_SELECTOR, 'input[name="keyword"]')
+            
+        time.sleep(1)
         input_field.send_keys(word)
         input_field.send_keys(Keys.ENTER)
 
@@ -125,7 +133,7 @@ def scrape_website(url, word):
                     model_number = model_number_element.find_next('span', class_='sku-value').text.strip()
                     # Check if the model number matches the input word exactly
                     if model_number.upper() == word:
-                        items.append({'price': price, 'model_number': model_number})
+                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
                         break  # Exit the loop after finding the first price
 
     driver.quit()
@@ -137,15 +145,33 @@ def scrape_website(url, word):
 
 
 def compare_prices(word):
-    website1_url = 'https://www.homedepot.com/'
-    website2_url = 'https://www.rcwilley.com/'
-    website3_url = 'https://www.lowes.com/'
-    website4_url = 'https://www.bestbuy.com/'
+    website_urls = [
+        'https://www.homedepot.com/',
+        'https://www.rcwilley.com/',
+        'https://www.lowes.com/',
+        'https://www.bestbuy.com/'
+    ]
 
-    items_website1 = scrape_website(website1_url, word)
-    items_website2 = scrape_website(website2_url, word)
-    items_website3 = scrape_website(website3_url, word)
-    items_website4 = scrape_website(website4_url, word)
+    items_website1 = []
+    items_website2 = []
+    items_website3 = []
+    items_website4 = []
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = []
+        for url in website_urls:
+            futures.append(executor.submit(scrape_website, url, word))
+
+        for idx, future in enumerate(concurrent.futures.as_completed(futures)):
+            items = future.result()
+            if idx == 0:
+                items_website1 = items
+            elif idx == 1:
+                items_website2 = items
+            elif idx == 2:
+                items_website3 = items
+            elif idx == 3:
+                items_website4 = items
 
     if not items_website1:
         print(f"Model #{word} not found on Home Depot.")
@@ -175,7 +201,7 @@ def compare_prices(word):
 
 
 search_word = input("Enter Model #: ")
-search_word = re.sub(r'\W+', '', search_word) # Removes spaces and symbols from the input 
+search_word = re.sub(r'\W+', '', search_word)  # Removes spaces and symbols from the input
 compare_prices(search_word)
 
 # Test model # WM3400CW
