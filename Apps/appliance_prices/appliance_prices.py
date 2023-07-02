@@ -61,29 +61,33 @@ def scrape_website(url, word):
     soup = BeautifulSoup(page_source, 'html.parser')
     items = []
 
+
     if "homedepot.com" in url:
         product_items = soup.find_all('div', attrs={'data-testid': 'product-pod', 'class': 'product-pod--s5vy1'})
         if not product_items:
             price_element = soup.find('div', class_='price')
             if price_element:
                 price_text = price_element.text.strip()
-                price_match = re.search(r'\d{1,3}(?:,\d{3})*(?:\.\d{2})?', price_text)
-                if price_match:
-                    price = float(price_match.group().replace(',', ''))
-                    model_number = word
-                    items.append({'price': price, 'model_number': model_number})
+                price_text = re.sub(r'\D', '', price_text)
+                price_text = price_text[:-2] + '.' + price_text[-2:] 
+                price = float(price_text) 
+                model_number = word
+                items.append({'price': price, 'model_number': model_number})
+
         else:
             item = product_items[0]
             price_element = item.find('div', class_='price')
             model_number_element = item.find('div', class_='product-identifier--bd1f5')
             if price_element and model_number_element:
                 price_text = price_element.text.strip()
-                price_match = re.search(r'\d{1,3}(?:,\d{3})*(?:\.\d{2})?', price_text)
-                if price_match:
-                    price = float(price_match.group().replace(',', ''))
-                    model_number = model_number_element.text.strip().replace('Model# ', '')
-                    if model_number.upper() == word:
-                        items.append({'price': price, 'model_number': model_number})
+                price_text = re.sub(r'\D', '', price_text)
+                price_text = price_text[:-2] + '.' + price_text[-2:]
+                price = float(price_text)
+                model_number = model_number_element.text.strip().replace('Model# ', '')
+                if model_number.upper() == word:
+                    items.append({'price': price, 'model_number': model_number})
+
+
 
     elif "rcwilley.com" in url:
         product_items = soup.find_all('div', class_='productContent')
@@ -92,13 +96,17 @@ def scrape_website(url, word):
             if price_element:
                 product_link_element = item.find_parent('a')
                 if product_link_element:
-                    product_link = "https://www.rcwilley.com" + product_link_element.get('href')
-                    model_match = re.search(r'(?<=/)\w+(?=/\d+)', product_link)
+                    product_link = product_link_element.get('href')
+                    print(product_link)
+                    model_match = re.search(r'/([^/]+)/\d+/', product_link)
                     if model_match:
-                        model_number = model_match.group()
+                        model_number = model_match.group(1)
                         price = price_element.text.strip()
+                        print(price)
                         if model_number.upper() == word:
-                            items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
+                            items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': word})
+
+
 
     elif "lowes.com" in url:
         product_items = soup.find_all('div', class_=lambda value: value and value.endswith('tile_group'))
@@ -106,11 +114,12 @@ def scrape_website(url, word):
             price_element = soup.find('span', class_='item-price-dollar')
             if price_element:
                 price_text = price_element.text.strip().replace('$', '')
-                price_match = re.search(r'\d+(?:\.\d+)?', price_text)
+                price_match = re.search(r'\d+(?:,\d+)*(?:\.\d+)?', price_text)
                 if price_match:
-                    price = float(price_match.group())
+                    price = float(price_match.group().replace(',', ''))
                     model_number = word
-                    items.append({'price': price, 'model_number': word})
+                    image_url = ''
+                    items.append({'price': price, 'model_number': word, 'image_url': image_url})
         else:
             item = product_items[0]
             model_element = item.find('div', class_='reglr-dv expand-specs-mdl-id')
@@ -119,11 +128,13 @@ def scrape_website(url, word):
                 price_element = item.find('div', attrs={'data-selector': 'splp-prd-act-$'})
                 if price_element:
                     price_text = price_element.get('aria-label')
-                    price_match = re.search(r'\d+(?:\.\d+)?', price_text)
+                    price_match = re.search(r'\d+(?:,\d+)*(?:\.\d+)?', price_text)
                     if price_match:
-                        price = float(price_match.group())
+                        price = float(price_match.group().replace(',', ''))
                         if model_number.upper() == word:
-                            items.append({'price': price, 'model_number': model_number})
+                            image_url = ''
+                            items.append({'price': price, 'model_number': model_number, 'image_url': image_url})
+
 
     elif "bestbuy.com" in url:
         product_items = soup.find_all('div', class_='pricing-price')
@@ -134,19 +145,18 @@ def scrape_website(url, word):
                 model_number_element = item.find_previous('span', class_='attribute-title', string='Model:')
                 if model_number_element:
                     model_number = model_number_element.find_next('span', class_='sku-value').text.strip()
-                    # Check if the model number matches the input word exactly
                     if model_number.upper() == word:
-                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
-                        break  # Exit the loop after finding the first price
+                        image_url = ''
+                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number, 'image_url': image_url})
+                        break 
 
     driver.quit()
 
     if not items:
-        return None  # Return None if no items found
-    else:
+        return None
         return items
     
-def get_image_url(url, word):
+def get_image_url_rcwilley(url, word):
     options = uc.ChromeOptions()
     options.add_argument('--headless')
     driver = uc.Chrome(options=options)
@@ -168,10 +178,26 @@ def get_image_url(url, word):
     if "rcwilley.com" in url:
         page_source = driver.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
-        image_elements = soup.find_all('div', class_=re.compile(r'^productImage'))
-        for image_element in image_elements:
-            image_url = image_element.find('img')['src']
-            results.append({'image_url': image_url})
+        product_items = soup.find_all('div', class_='productContent')
+        
+        if product_items:
+            for item in product_items:
+                price_element = item.find('span', class_='price')
+                if price_element:
+                    product_link_element = item.find_parent('a')
+                    if product_link_element:
+                        product_link = product_link_element.get('href')
+                        model_match = re.search(r'/([^/]+)/\d+/', product_link)
+                        if model_match:
+                            model_number = model_match.group(1)
+                            if model_number.replace('-', '').upper() == word:
+                                image_element = item.find_previous_sibling('div', class_=re.compile(r'^productImage'))
+                                if image_element:
+                                    image_url = image_element.find('img')['src']
+                                    results.append({'image_url': image_url})
+                                else:
+                                    results.append({'image_url': 'No Product Image'})
+
 
     driver.quit()
     return results
@@ -181,103 +207,96 @@ def get_image_url(url, word):
 def compare_prices(word):
     website_urls = [
         'https://www.homedepot.com/',
-        'https://www.rcwilley.com/',
         'https://www.lowes.com/',
-        'https://www.bestbuy.com/'
+        'https://www.bestbuy.com/',
+        'https://www.rcwilley.com/'
     ]
 
-    items_website1 = []
-    items_website2 = []
-    items_website3 = []
-    items_website4 = []
-
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = []
-        for url in website_urls:
-            futures.append(executor.submit(scrape_website, url, word))
-
-        for idx, future in enumerate(concurrent.futures.as_completed(futures)):
-            items = future.result()
-            if idx == 0:
-                items_website1 = items
-            elif idx == 1:
-                items_website2 = items
-            elif idx == 2:
-                items_website3 = items
-            elif idx == 3:
-                items_website4 = items
+    website_names = {
+        'https://www.homedepot.com/': 'Home Depot',
+        'https://www.lowes.com/': 'Lowes',
+        'https://www.bestbuy.com/': 'Best Buy',
+        'https://www.rcwilley.com/': 'RC Willey'
+    }
 
     results = []
 
-    if not items_website1:
-        results.append({
-            'model_number': word,
-            'price': 'N/A',
-            'website': 'Home Depot',
-        })
-    else:
-        if items_website1[0]['model_number'] == word:
-            for item in items_website1:
-                item['website'] = 'Home Depot'
-                price = "${:.2f}".format(item['price'])
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = []
+        image_url_futures = {}
+        price_futures = {}
+
+        for url in website_urls:
+            if "rcwilley.com" in url:
+                image_url_futures[url] = executor.submit(get_image_url_rcwilley, url, word)
+                price_futures[url] = executor.submit(scrape_website, url, word)
+            else:
+                future = executor.submit(scrape_website, url, word)
+                futures.append((future, url))
+
+        for future, website_url in futures:
+            items_list = future.result()
+            print(f"Scraped items from {website_url}: {items_list}")
+            if items_list:
+                for item in items_list:
+                    item['website'] = website_names[website_url]
+                    price = item.get('price')
+                    if price is not None:
+                        price = "${:.2f}".format(price)
+                    else:
+                        price = 'N/A'
+                    # Set the model number as word instead of item['model_number']
+                    results.append({
+                        'model_number': word,
+                        'price': price,
+                        'website': item['website'],
+                    })
+            else:
                 results.append({
-                    'model_number': item['model_number'],
-                    'price': price,
-                    'website': 'Home Depot',
+                    'model_number': word,
+                    'price': 'N/A',
+                    'website': website_names[website_url],
                 })
 
-    if not items_website2:
-        results.append({
-            'model_number': word,
-            'price': 'N/A',
-            'website': 'RC Willey',
-        })
-    else:
-        for item in items_website2:
-            item['website'] = 'RC Willey'
-            price = "${:.2f}".format(item['price'])
-            results.append({
-                'model_number': item['model_number'],
-                'price': price,
-                'website': 'RC Willey',
-            })
-
-    if not items_website3:
-        results.append({
-            'model_number': word,
-            'price': 'N/A',
-            'website': 'Lowes',
-        })
-    else:
-        for item in items_website3:
-            item['website'] = 'Lowes'
-            price = "${:.2f}".format(item['price'])
-            results.append({
-                'model_number': item['model_number'],
-                'price': price,
-                'website': 'Lowes',
-            })
-
-    if not items_website4:
-        results.append({
-            'model_number': word,
-            'price': 'N/A',
-            'website': 'Best Buy',
-        })
-    else:
-        if items_website4[0]['model_number'] == word:
-            for item in items_website4:
-                item['website'] = 'Best Buy'
-                price = "${:.2f}".format(item['price'])
+        for website_url, price_future in price_futures.items():
+            price_data = price_future.result()
+            print(f"Price data from {website_url}: {price_data}")
+            if price_data:
+                for item in price_data:
+                    item['website'] = website_names[website_url]
+                    price = item.get('price')
+                    if price is not None:
+                        price = "${:.2f}".format(price)
+                    else:
+                        price = 'N/A'
+                    results.append({
+                        'model_number': item['model_number'],
+                        'price': price,
+                        'website': item['website'],
+                    })
+            else:
                 results.append({
-                    'model_number': item['model_number'],
-                    'price': price,
-                    'website': 'Best Buy',
+                    'model_number': word,
+                    'price': 'N/A',
+                    'website': website_names[website_url],
                 })
 
-    image_url = get_image_url('https://www.rcwilley.com/', word)
+        for website_url, image_url_future in image_url_futures.items():
+            image_url = image_url_future.result()
+            print(f"Image URL from {website_url}: {image_url}")
+            if image_url:
+                matching_results = [item for item in results if item['website'] == website_names[website_url] and item['model_number'] == word]
+                if matching_results:
+                    for item in matching_results:
+                        item['image_url'] = image_url
+            else:
+                matching_results = [item for item in results if item['website'] == website_names[website_url] and item['model_number'] == word]
+                if matching_results:
+                    for item in matching_results:
+                        item['image_url'] = 'No Product Image'
 
-    return results, image_url
+
+    return results
 
 
 @app.route('/')
@@ -288,17 +307,20 @@ def index():
 def compare():
     search_word = request.form['search_word']
     search_word = re.sub(r'\W+', '', search_word)
-    results_data, image_url = compare_prices(search_word)  # Get results and image URL
+    results_data = compare_prices(search_word)  # Get results
 
     results = []
+    image_url = None
+
     for item in results_data:
         model_number = item['model_number']
-        price = item['price']
+        price = item.get('price', 'N/A')
         website = item['website']
+        if 'image_url' in item:
+            image_url = item['image_url']
         results.append({'model_number': model_number, 'price': price, 'website': website})
 
     return render_template('results.html', results=results, image_url=image_url)
-
 
 
 if __name__ == '__main__':

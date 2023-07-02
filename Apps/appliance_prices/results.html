@@ -23,6 +23,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: flex-start;
+            position: relative;
         }
 
         .result-container p {
@@ -74,6 +75,10 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 10px;
+            position: absolute;
+            left: 50%;
+            bottom: -30px;
+            transform: translateX(-50%);
         }
     </style>
 </head>
@@ -86,12 +91,12 @@
                     <p>
                         {% if item['website'] == 'Home Depot' %}
                             <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/THD_logo.jpg" alt="Home Depot" class="logo-image">
-                        {% elif item['website'] == 'RC Willey' %}
-                            <img src="https://invitationdigital-res-1.cloudinary.com/image/upload/w_200,h_200,c_fill,q_auto,fl_strip_profile,f_auto/rc_willey_logo.jpg" alt="RC Willey" class="logo-image">
                         {% elif item['website'] == 'Lowes' %}
                             <img src="https://pbs.twimg.com/profile_images/1427348517165703170/jCmq6N7r_400x400.jpg" alt="Lowes" class="logo-image">
                         {% elif item['website'] == 'Best Buy' %}
                             <img src="https://cdn.freebiesupply.com/logos/large/2x/best-buy-logo-svg-vector.svg" alt="Best Buy" class="logo-image">
+                        {% elif item['website'] == 'RC Willey' %}
+                            <img src="https://invitationdigital-res-1.cloudinary.com/image/upload/w_200,h_200,c_fill,q_auto,fl_strip_profile,f_auto/rc_willey_logo.jpg" alt="RC Willey" class="logo-image">
                         {% endif %}
                         <span class="price">Price: {{ item['price'] }}</span>
                     </p>
@@ -101,10 +106,14 @@
             <div class="right-section">
                 <p class="model-number">Model #: {{ results[0]['model_number'] }}</p>
                 {% if image_url %}
-                {% for image in image_url %}
-                    <img src="{{ image['image_url'] }}" alt="Product Image" class="product-image">
-                {% endfor %}
+                {% if image_url == 'No Product Image' %}
+                    <p>No Product Image</p>
+                {% else %}
+                    {% for image in image_url %}
+                        <img src="{{ image['image_url'] }}" alt="Product Image" class="product-image">
+                    {% endfor %}
                 {% endif %}
+            {% endif %}
             </div>
         {% else %}
             <p>No items found.</p>
