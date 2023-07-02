@@ -1,3 +1,7 @@
+# Added concurrent.futures parallel processing to take run time from 50 seconds down to 16 seconds.
+
+import concurrent.futures
+
 from flask import Flask, render_template, request
 import time
 import re
@@ -132,7 +136,7 @@ def scrape_website(url, word):
                     model_number = model_number_element.find_next('span', class_='sku-value').text.strip()
                     # Check if the model number matches the input word exactly
                     if model_number.upper() == word:
-                        items.append({'price': price, 'model_number': model_number})
+                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
                         break  # Exit the loop after finding the first price
 
     driver.quit()
@@ -141,60 +145,139 @@ def scrape_website(url, word):
         return None  # Return None if no items found
     else:
         return items
+    
+def get_image_url(url, word):
+    options = uc.ChromeOptions()
+    options.add_argument('--headless')
+    driver = uc.Chrome(options=options)
+    driver.get(url)
+
+    if "rcwilley.com" in url:
+        input_field = driver.find_element(By.ID, 'searchBox')
+        input_field.send_keys(word)
+        submit_button = driver.find_element(By.ID, 'searchSubmit')
+        submit_button.click()
+        wait = WebDriverWait(driver, 10)
+        try:
+            wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'product-pod--s5vy1')))
+        except TimeoutException:
+            pass
+
+    results = []
+
+    if "rcwilley.com" in url:
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        image_elements = soup.find_all('div', class_=re.compile(r'^productImage'))
+        for image_element in image_elements:
+            image_url = image_element.find('img')['src']
+            results.append({'image_url': image_url})
+
+    driver.quit()
+    return results
+
 
 
 def compare_prices(word):
-    website1_name = 'Home Depot'
-    website2_name = 'RC Willey'
-    website3_name = 'Lowes'
-    website4_name = 'Best Buy'
+    website_urls = [
+        'https://www.homedepot.com/',
+        'https://www.rcwilley.com/',
+        'https://www.lowes.com/',
+        'https://www.bestbuy.com/'
+    ]
 
-    website1_url = 'https://www.homedepot.com/'
-    website2_url = 'https://www.rcwilley.com/'
-    website3_url = 'https://www.lowes.com/'
-    website4_url = 'https://www.bestbuy.com/'
+    items_website1 = []
+    items_website2 = []
+    items_website3 = []
+    items_website4 = []
 
-    items_website1 = scrape_website(website1_url, word)
-    items_website2 = scrape_website(website2_url, word)
-    items_website3 = scrape_website(website3_url, word)
-    items_website4 = scrape_website(website4_url, word)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = []
+        for url in website_urls:
+            futures.append(executor.submit(scrape_website, url, word))
+
+        for idx, future in enumerate(concurrent.futures.as_completed(futures)):
+            items = future.result()
+            if idx == 0:
+                items_website1 = items
+            elif idx == 1:
+                items_website2 = items
+            elif idx == 2:
+                items_website3 = items
+            elif idx == 3:
+                items_website4 = items
 
     results = []
 
     if not items_website1:
-        results.append(f"Model #: {word}, Price: N/A, Website: {website1_name}")
+        results.append({
+            'model_number': word,
+            'price': 'N/A',
+            'website': 'Home Depot',
+        })
     else:
         if items_website1[0]['model_number'] == word:
             for item in items_website1:
-                item['website'] = website1_name
-                price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
-                results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website1_name}")
+                item['website'] = 'Home Depot'
+                price = "${:.2f}".format(item['price'])
+                results.append({
+                    'model_number': item['model_number'],
+                    'price': price,
+                    'website': 'Home Depot',
+                })
 
     if not items_website2:
-        results.append(f"Model #: {word}, Price: N/A, Website: {website2_name}")
+        results.append({
+            'model_number': word,
+            'price': 'N/A',
+            'website': 'RC Willey',
+        })
     else:
         for item in items_website2:
-            item['website'] = website2_name
-            price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
-            results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website2_name}")
+            item['website'] = 'RC Willey'
+            price = "${:.2f}".format(item['price'])
+            results.append({
+                'model_number': item['model_number'],
+                'price': price,
+                'website': 'RC Willey',
+            })
 
     if not items_website3:
-        results.append(f"Model #: {word}, Price: N/A, Website: {website3_name}")
+        results.append({
+            'model_number': word,
+            'price': 'N/A',
+            'website': 'Lowes',
+        })
     else:
         for item in items_website3:
-            item['website'] = website3_name
-            price = "${:.2f}".format(item['price'])  # Format the price with "$" symbol
-            results.append(f"Model #: {item['model_number']}, Price: {price}, Website: {website3_name}")
+            item['website'] = 'Lowes'
+            price = "${:.2f}".format(item['price'])
+            results.append({
+                'model_number': item['model_number'],
+                'price': price,
+                'website': 'Lowes',
+            })
 
     if not items_website4:
-        results.append(f"Model #: {word}, Price: N/A, Website: {website4_name}")
+        results.append({
+            'model_number': word,
+            'price': 'N/A',
+            'website': 'Best Buy',
+        })
     else:
         if items_website4[0]['model_number'] == word:
             for item in items_website4:
-                item['website'] = website4_name
-                results.append(f"Model #: {item['model_number']}, Price: {item['price']}, Website: {website4_name}")
+                item['website'] = 'Best Buy'
+                price = "${:.2f}".format(item['price'])
+                results.append({
+                    'model_number': item['model_number'],
+                    'price': price,
+                    'website': 'Best Buy',
+                })
 
-    return results
+    image_url = get_image_url('https://www.rcwilley.com/', word)
+
+    return results, image_url
 
 
 @app.route('/')
@@ -205,17 +288,16 @@ def index():
 def compare():
     search_word = request.form['search_word']
     search_word = re.sub(r'\W+', '', search_word)
-    results_text = compare_prices(search_word)
-    results = []
-    for text in results_text:
-        match = re.search(r'Model #: (.+), Price: (.+), Website: ([^,]+)', text)
-        if match:
-            model_number = match.group(1)
-            price = match.group(2)
-            website = match.group(3)
-            results.append({'model_number': model_number, 'price': price, 'website': website})
+    results_data, image_url = compare_prices(search_word)  # Get results and image URL
 
-    return render_template('results.html', results=results)
+    results = []
+    for item in results_data:
+        model_number = item['model_number']
+        price = item['price']
+        website = item['website']
+        results.append({'model_number': model_number, 'price': price, 'website': website})
+
+    return render_template('results.html', results=results, image_url=image_url)
 
 
 

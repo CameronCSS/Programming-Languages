@@ -2,17 +2,99 @@
 <html>
 <head>
     <title>Price Comparison Result</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+        body {
+            background: #f2f2f2;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .result-container {
+            width: 60%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .result-container p {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-container .left-section {
+            flex: 1;
+        }
+
+        .result-container .right-section {
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-right: 20px;
+        }
+
+        .result-container img.product-image {
+            width: 200px;
+        }
+
+        .result-container img.logo-image {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+        }
+
+        .result-container .price {
+            color: green;
+            font-size: 14px;
+        }
+        
+        .result-container .model-number {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
     <h1>Price Comparison Result</h1>
-    {% if results %}
-        <p>Model #: {{ results[0]['model_number'] }}</p>
-        {% for item in results[0:] %}
-            <p>{{ item['website'] }}, Price: {{ item['price'] }}</p>
-        {% endfor %}
-    {% else %}
-        <p>No items found.</p>
-    {% endif %}
+    <div class="result-container">
+        {% if results %}
+            <div class="left-section">
+                {% for item in results %}
+                    <p>
+                        {% if item['website'] == 'Home Depot' %}
+                            <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/THD_logo.jpg" alt="Home Depot" class="logo-image">
+                        {% elif item['website'] == 'RC Willey' %}
+                            <img src="https://invitationdigital-res-1.cloudinary.com/image/upload/w_200,h_200,c_fill,q_auto,fl_strip_profile,f_auto/rc_willey_logo.jpg" alt="RC Willey" class="logo-image">
+                        {% elif item['website'] == 'Lowes' %}
+                            <img src="https://pbs.twimg.com/profile_images/1427348517165703170/jCmq6N7r_400x400.jpg" alt="Lowes" class="logo-image">
+                        {% elif item['website'] == 'Best Buy' %}
+                            <img src="https://cdn.freebiesupply.com/logos/large/2x/best-buy-logo-svg-vector.svg" alt="Best Buy" class="logo-image">
+                        {% endif %}
+                        <span class="price">Price: {{ item['price'] }}</span>
+                    </p>
+                {% endfor %}
+            </div>
+            <div class="right-section">
+                <p class="model-number">Model #: {{ results[0]['model_number'] }}</p>
+                {% if image_url %}
+                {% for image in image_url %}
+                    <img src="{{ image['image_url'] }}" alt="Product Image" class="product-image">
+                {% endfor %}
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No items found.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
-    
