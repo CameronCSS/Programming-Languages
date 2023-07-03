@@ -71,7 +71,7 @@ def scrape_website(url, word):
                 price_text = re.sub(r'\D', '', price_text)
                 price_text = price_text[:-2] + '.' + price_text[-2:]
                 price = float(price_text)
-                model_number = word
+                model_number = word.upper()
                 items.append({'price': price, 'model_number': model_number})
         else:
             price_element = soup.find('div', class_='price')
@@ -81,7 +81,7 @@ def scrape_website(url, word):
                 price_text = price_text[:-2] + '.' + price_text[-2:]
                 price = float(price_text)
                 model_number = model_number_element.text.strip().replace('Model# ', '')
-                if model_number.upper() == word:
+                if model_number.upper() == word.upper():
                     items.append({'price': price, 'model_number': model_number})
 
 
@@ -98,7 +98,7 @@ def scrape_website(url, word):
                     if model_match:
                         model_number = model_match.group(1)
                         price = price_element.text.strip()
-                        if model_number.replace('-', '').upper() == word:
+                        if model_number.replace('-', '').upper() == word.upper():
                             items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
 
 
@@ -111,7 +111,7 @@ def scrape_website(url, word):
                 price_match = re.search(r'\d+(?:,\d+)*(?:\.\d+)?', price_text)
                 if price_match:
                     price = float(price_match.group().replace(',', ''))
-                    model_number = word
+                    model_number = word.upper()
                     image_url = ''
                     items.append({'price': price, 'model_number': word, 'image_url': image_url})
         else:
@@ -125,7 +125,7 @@ def scrape_website(url, word):
                     price_match = re.search(r'\d+(?:,\d+)*(?:\.\d+)?', price_text)
                     if price_match:
                         price = float(price_match.group().replace(',', ''))
-                        if model_number.upper() == word:
+                        if model_number.upper() == word.upper():
                             image_url = ''
                             items.append({'price': price, 'model_number': model_number, 'image_url': image_url})
 
@@ -139,10 +139,16 @@ def scrape_website(url, word):
                 model_number_element = item.find_previous('span', class_='attribute-title', string='Model:')
                 if model_number_element:
                     model_number = model_number_element.find_next('span', class_='sku-value').text.strip()
-                    if model_number.upper() == word:
+                    
+                    # Remove "/AA" suffix from model number if present
+                    if model_number.upper().endswith('/AA'):
+                        model_number = model_number[:-3]
+                    
+                    if model_number.upper() == word.upper():
                         image_url = ''
                         items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
                         break
+
 
     driver.quit()
 
@@ -185,7 +191,7 @@ def get_image_url_rcwilley(url, word):
                         model_match = re.search(r'/([^/]+)/\d+/', product_link)
                         if model_match:
                             model_number = model_match.group(1)
-                            if model_number.replace('-', '').upper() == word:
+                            if model_number.replace('-', '').upper() == word.upper():
                                 image_element = item.find_previous_sibling('div', class_=re.compile(r'^productImage'))
                                 if image_element:
                                     image_url = image_element.find('img')['src']
