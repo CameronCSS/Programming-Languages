@@ -15,7 +15,6 @@ import undetected_chromedriver as uc
 
 def scrape_website(url, word):
     options = uc.ChromeOptions()
-    options.add_argument('--headless')
     driver = uc.Chrome(options=options)
     driver.get(url)
 

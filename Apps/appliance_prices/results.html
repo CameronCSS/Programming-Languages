@@ -63,9 +63,14 @@
             font-weight: bold;
             font-size: 18px;
         }
+        
+        .search-again-container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-        .result-container button[type="button"] {
-            width: 100%;
+        .search-again-container button[type="button"] {
+            width: 200px;
             height: 36px;
             border: none;
             background: #00B4CC;
@@ -74,11 +79,6 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 10px;
-            position: absolute;
-            left: 50%;
-            bottom: -30px;
-            transform: translateX(-50%);
         }
     </style>
 </head>
@@ -101,7 +101,6 @@
                         <span class="price">Price: {{ item['price'] }}</span>
                     </p>
                 {% endfor %}
-                <button type="button" onclick="location.href='/'">Search again</button>
             </div>
             <div class="right-section">
                 <p class="model-number">Model #: {{ results[0]['model_number'] }}</p>
@@ -117,8 +116,10 @@
             </div>
         {% else %}
             <p>No items found.</p>
-            <button type="button" onclick="location.href='/'">Search again</button>
         {% endif %}
+    </div>
+    <div class="search-again-container">
+        <button type="button" onclick="location.href='/'">Search again</button>
     </div>
 </body>
 </html>

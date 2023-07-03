@@ -63,22 +63,19 @@ def scrape_website(url, word):
 
 
     if "homedepot.com" in url:
-        product_items = soup.find_all('div', attrs={'data-testid': 'product-pod', 'class': 'product-pod--s5vy1'})
-        if not product_items:
+        model_number_element = soup.find('div', class_='product-identifier--bd1f5')
+        if not model_number_element:
             price_element = soup.find('div', class_='price')
             if price_element:
                 price_text = price_element.text.strip()
                 price_text = re.sub(r'\D', '', price_text)
-                price_text = price_text[:-2] + '.' + price_text[-2:] 
-                price = float(price_text) 
+                price_text = price_text[:-2] + '.' + price_text[-2:]
+                price = float(price_text)
                 model_number = word
                 items.append({'price': price, 'model_number': model_number})
-
         else:
-            item = product_items[0]
-            price_element = item.find('div', class_='price')
-            model_number_element = item.find('div', class_='product-identifier--bd1f5')
-            if price_element and model_number_element:
+            price_element = soup.find('div', class_='price')
+            if price_element:
                 price_text = price_element.text.strip()
                 price_text = re.sub(r'\D', '', price_text)
                 price_text = price_text[:-2] + '.' + price_text[-2:]
@@ -86,7 +83,6 @@ def scrape_website(url, word):
                 model_number = model_number_element.text.strip().replace('Model# ', '')
                 if model_number.upper() == word:
                     items.append({'price': price, 'model_number': model_number})
-
 
 
     elif "rcwilley.com" in url:
@@ -145,8 +141,8 @@ def scrape_website(url, word):
                     model_number = model_number_element.find_next('span', class_='sku-value').text.strip()
                     if model_number.upper() == word:
                         image_url = ''
-                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number, 'image_url': image_url})
-                        break 
+                        items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
+                        break
 
     driver.quit()
 
@@ -244,7 +240,6 @@ def compare_prices(word):
                         price = "${:.2f}".format(price)
                     else:
                         price = 'N/A'
-                    # Set the model number as word instead of item['model_number']
                     results.append({
                         'model_number': word,
                         'price': price,
@@ -306,7 +301,7 @@ def index():
 def compare():
     search_word = request.form['search_word']
     search_word = re.sub(r'\W+', '', search_word)
-    results_data = compare_prices(search_word)  # Get results
+    results_data = compare_prices(search_word)
 
     results = []
     image_url = None
@@ -323,4 +318,4 @@ def compare():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=5000)
