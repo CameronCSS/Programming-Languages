@@ -102,10 +102,8 @@ def scrape_website(url, word):
                     if model_match:
                         model_number = model_match.group(1)
                         price = price_element.text.strip()
-                        print(price)
-                        if model_number.upper() == word:
-                            items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': word})
-
+                        if model_number.replace('-', '').upper() == word:
+                            items.append({'price': float(price.replace('$', '').replace(',', '')), 'model_number': model_number})
 
 
     elif "lowes.com" in url:
@@ -154,6 +152,7 @@ def scrape_website(url, word):
 
     if not items:
         return None
+    else:
         return items
     
 def get_image_url_rcwilley(url, word):
@@ -324,4 +323,4 @@ def compare():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=80)
