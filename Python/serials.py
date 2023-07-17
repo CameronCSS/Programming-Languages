@@ -1,4 +1,5 @@
-## pyinstaller --windowed serials.py --onefile --hidden-import openpyxl.cell._writer --hidden-import pyhtml2pdf --hidden-import pdfkit
+## pyinstaller --windowed serials.py --onefile --hidden-import openpyxl --hidden-import pandas --hidden-import numpy --hidden-import dateutil --hidden-import pyhtml2pdf --hidden-import pdfkit --hidden-import wkhtmltopdf
+
 
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
