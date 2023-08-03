@@ -7,9 +7,11 @@ import pandas as pd
 import difflib
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
-from pyhtml2pdf import converter
+import pdfkit
 import os
 import threading
+
+pdfkit_config = pdfkit.configuration(wkhtmltopdf='PATH_TO_/wkhtmltopdf.exe')
 
 file_paths = []
 target_columns = ['Unit', 'Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer']
@@ -127,7 +129,7 @@ def save_data():
                 except Exception as e:
                     messagebox.showerror("Error", f"An unknown error occurred while trying to write to the file: {html_file}. Error: {str(e)}")
 
-                converter.convert(html_file, output_pdf_file)
+                pdfkit.from_file(html_file, output_pdf_file, configuration=pdfkit_config)
                 messagebox.showinfo("Success", "Processing completed successfully!")
 
                 processing_completed = True  # Processing completed successfully
