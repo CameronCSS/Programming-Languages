@@ -7,7 +7,7 @@
   <h2 align="center">Programming Personal Projects</h2>
   <p align="center">
   All of my practice code :computer: and projects will be located here.
-   <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
+   <br> <sub><a href="https://cameroncss.com/#contact">Contact me </a></sub>
 <br>
     <br>
      <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong>« Back to Portfolio</strong></a>
