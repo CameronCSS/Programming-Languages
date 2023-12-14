@@ -6,7 +6,7 @@
   <h2 align="center">Jupyter (Data) Notebooks</h2>
   <p align="center">
   All of my python Notebook code :computer: and practice projects will be here.
-   <br> <sub><a href="https://cameroncss.com/#contact">:wavy_dash: Contact me :wavy_dash:</a></sub>
+   <br> <sub><a href="https://cameroncss.com/#contact">Contact me</a></sub>
 <br>
     <br>
      <a href="https://github.com/CameronCSS/Programming-Languages"><strong>« Back to Programming Languages</strong></a>
