@@ -19,7 +19,7 @@
 
 <br>
 
-## Price Comparison using Selenium
+## [Price Comparison using Selenium](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Retail%20Price%20Comparison.README.md)
 
 Using Selenium and python I scraped products and their prices from the first page of two websites based on search input the user enters.
 
