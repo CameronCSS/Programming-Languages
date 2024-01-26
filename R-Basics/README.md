@@ -3,6 +3,8 @@
 <div align="center">
 <img src="https://user-images.githubusercontent.com/121735588/219838644-7893dee1-4ef8-4b73-9255-4e75588f5ff5.png" alt="pythonLogo" width="200" height="200">
 
+<a href="https://camdoesdata.com/#contact">Contact Me</a>
+
   <a href="https://github.com/CameronCSS/PersonalProjects"><strong>« Back to Project Portfolio</strong></a>
 </div>
 <br>
@@ -430,9 +432,7 @@ This code loads the required libraries, dplyr and ggplot2. Then, it loads the mt
 <br>
 <a href="https://github.com/CameronCSS/PersonalProjects/blob/main/README.md"><strong>« Back to Portfolio</strong></a>
 
-## <a href="https://cameroncss.com/#contact">Contact Me</a>
-
-  </table>
+## <a href="https://camdoesdata.com/#contact">Contact Me</a>
   <p style="margin-left: auto;">
     <a href="https://drive.google.com/file/d/1YaM4hDtt2-79ShBVTN06Y3BU79LvFw6J/view?usp=sharing" target="_blank" rel="noopener noreferrer">
       <img src="https://user-images.githubusercontent.com/121735588/215364205-abdfc0ac-53db-4733-8d43-b57c1bafb802.png" alt="Resume button">
