@@ -13,6 +13,13 @@
 
 ----
 
+```diff 
+- Amazon has changed their policies.
+- It is no longer possible to scrape their information using this method
+
++ I am currently building a new version that will actually work.
+```
+
 ## Amazon Web Scraper
 
 **Before we start coding anything we want to decide if we will be using Visual code, or Jupyter Notebook, or any other coding environment.**
