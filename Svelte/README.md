@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 <div align="center">
 
-  <img src="https://github.com/CameronCSS/Programming-Languages/assets/121735588/6c16a790-5237-4ec2-9a0f-d2e75bedb2e0" alt="SvelteLogo" height="200">
+  <img src="https://user-images.githubusercontent.com/121735588/220015374-100076ed-1e95-4cc7-a67a-1be1c0a31dba.png" alt="SvelteLogo" width="200" height="200">
 
 
 
