@@ -8,7 +8,7 @@
   <h3 style="text-decoration: underline;" align="center">This is just a Repo for my Svelte code and projects</h3>
   <p align="center">
 
-   <br> <sub><a href="https://cameroncss.com/#contact">Contact me</a></sub>
+   <br> <sub><a href="https://camdoesdata.com/#contact">Contact me</a></sub>
 <br>
     <br>
      <a href="https://github.com/CameronCSS/PersonalProjects"><strong>« Back to Project Portfolio</strong></a>
@@ -75,7 +75,7 @@
 ----
 
 <a name="Contact"></a> 
-## <a href="https://cameroncss.com/#contact">Contact Me</a>
+## <a href="https://camdoesdata.com/#contact">Contact Me</a>
 
   </table>
   <p style="margin-left: auto;">
