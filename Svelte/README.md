@@ -16,6 +16,12 @@
 </div>
 
 ## Svelte Projects
+<a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Svelte/pollingApp/README.md" target="new">Polling App</a>
+
+&nbsp; &nbsp;- Created an app using only Svelte and javascript to create and vote on different Polls.
+
+<br>
+
 <a href="" target="new">Live Chat app</a>
 
 &nbsp; &nbsp;- Currently working on...
