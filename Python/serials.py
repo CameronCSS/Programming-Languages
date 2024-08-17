@@ -2,6 +2,8 @@
 # Above only needed when doing package install (pyinstaller) for an .exe file
 # Running py from visual studio or cli will work without
 
+# tk is used to create a user-friendly UI
+# works both running py directly or in an .exe
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import pandas as pd
