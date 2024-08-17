@@ -1,25 +1,34 @@
 ## pyinstaller --windowed serials.py --onefile --hidden-import openpyxl --hidden-import pandas --hidden-import numpy --hidden-import dateutil --hidden-import pyhtml2pdf --hidden-import pdfkit --hidden-import wkhtmltopdf
-
+# Above only needed when doing package install (pyinstaller) for an .exe file
+# Running py from visual studio or cli will work without
 
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import pandas as pd
+
+# for fuzzy matches
 import difflib
+
+# only library I could get to correctly load various Excel files 
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+
 import pdfkit
 import os
 import threading
 
+# using wkhtmltopdf since every other html / pdf library converter had several errors and never worked correctly.
 pdfkit_config = pdfkit.configuration(wkhtmltopdf='PATH_TO_/wkhtmltopdf.exe')
+
 
 file_paths = []
 target_columns = ['Unit', 'Fridge', 'Range', 'Microwave', 'Dishwasher', 'Washer', 'Dryer']
 tab_names = ["Preview", "Details"]
-data_loaded_label1 = None
-data_loaded_label2 = None
+label1 = None
+label2 = None
 processing_label = None
 
+# fuzzy match column names since sometimes files will not have EXACT matches.
 def close_match(col_name, column_list):
     best_match = difflib.get_close_matches(col_name, column_list, n=1, cutoff=0.6)
     return best_match[0] if best_match else col_name
@@ -32,24 +41,26 @@ def process_data():
             df = pd.read_excel(file_path)
         except FileNotFoundError:
             messagebox.showerror("Error", f"File not found: {file_path}")
-            continue  # Skip to the next file
+            continue  
         except PermissionError:
             messagebox.showerror("Error", f"No permission to read the file: {file_path}")
-            continue  # Skip to the next file
+            continue  
         except IOError:
             messagebox.showerror("Error", f"IOError occurred while reading the file: {file_path}")
-            continue  # Skip to the next file
+            continue  
         except OSError:
             messagebox.showerror("Error", f"OSError occurred while reading the file: {file_path}")
-            continue  # Skip to the next file
+            continue  
         except Exception as e:
             messagebox.showerror("Error", f"An unknown error occurred while reading the file: {file_path}. Error: {str(e)}")
-            continue  # Skip to the next file
+            continue
         df.columns = [col.lower() for col in df.columns]
         df.columns = [close_match(col, target_columns) for col in df.columns]
 
         for col in target_columns:
             if col in df.columns:
+                # This fixes all the little voice to text errors that were present in the serial numbers.
+                # Can add more as needed
                 df[col] = df[col].astype(str).str.upper().str.replace('-', '').str.replace(',', '').str.replace('.', '').str.replace(' ', '').str.replace('AND', 'N').str.replace('IS', '').str.replace('ARE', 'R').str.replace('IF', 'F').str.replace('SEA', 'C').str.replace('FP', 'FB').str.replace('#', '').str.replace(':', '')
 
         combined_df = pd.concat([combined_df, df])
@@ -60,18 +71,18 @@ def process_data():
     return combined_df
 
 def save_data():
-    processing_completed = False  # Flag to track if processing completed successfully
+    processing_completed = False  # FLAG to Track if processing completed successfully
     try:
         combined_df = process_data()
-        global data_loaded_label1
-        global data_loaded_label2
+        global label1
+        global label2
         global processing_label
 
         # Hide the old labels
-        if data_loaded_label1:
-            data_loaded_label1.pack_forget()
-        if data_loaded_label2:
-            data_loaded_label2.pack_forget()
+        if label1:
+            label1.pack_forget()
+        if label2:
+            label2.pack_forget()
 
         if not combined_df.empty:
             combined_df.drop_duplicates(inplace=True)
@@ -84,7 +95,7 @@ def save_data():
             if output_pdf_file:
                 processing_label = tk.Label(root, text="Processing... Please Wait", fg="blue")
                 processing_label.pack(pady=10)
-                root.update()  # Force the window to update
+                root.update()
 
                 output_file = output_pdf_file.replace(".pdf", ".xlsx")
                 html_file = output_pdf_file.replace(".pdf", ".html")
@@ -95,7 +106,7 @@ def save_data():
 
                 combined_df.to_html(html_file, index=False)
 
-                # Add CSS styling
+                # Add CSS styling for the HTML output so final PDF looks nice
                 css = """
                 <style>
                 table {
@@ -132,11 +143,11 @@ def save_data():
                 pdfkit.from_file(html_file, output_pdf_file, configuration=pdfkit_config)
                 messagebox.showinfo("Success", "Processing completed successfully!")
 
-                processing_completed = True  # Processing completed successfully
+                processing_completed = True
 
                 root.after(1000, root.destroy)  # Delay closing the app by 1 second
 
-                # Attempt to delete the temporary files
+                # Attempt to delete the temporary files we created above
                 def delete_files():
                     try:
                         if os.path.exists(html_file):
@@ -151,11 +162,10 @@ def save_data():
         else:
             messagebox.showwarning("Warning", "No files selected.")
     except Exception as e:
-        # An error occurred, show an error message
         messagebox.showerror("Error", f"An error occurred while processing the files: {str(e)}")
     finally:
         if not processing_completed:
-            # Delete the temporary files if processing did not complete successfully
+            # Delete the temporary files if processing did not complete so we arent left with a bunch of temp files we will never use
             try:
                 if os.path.exists(html_file):
                     os.remove(html_file)
@@ -166,35 +176,35 @@ def save_data():
             root.quit()
 
 
-
+# basic label UI 
 def pick_files():
-    global data_loaded_label1
-    global data_loaded_label2
+    global label1
+    global label2
 
     files = filedialog.askopenfilenames(filetypes=(("Excel Files", "*.xls *.xlsx *.xlsm"),("All Files", "*.*")))
 
-    # check if selected files are Excel files
+    # check if selected files are actually Excel files
     for file in files:
         if not file.lower().endswith(('.xls', '.xlsx', '.xlsm')):
             messagebox.showwarning("Invalid file", f"Selected file {file} is not an Excel file.")
-            return  # Do not proceed with invalid files
+            return
 
     if files:
         file_paths.clear()
         file_paths.extend(files)
 
-        # Destroy the old labels if they exist
-        if data_loaded_label1:
-            data_loaded_label1.destroy()
-        if data_loaded_label2:
-            data_loaded_label2.destroy()
+        # destyroy original label boxes
+        if label1:
+            label1.destroy()
+        if label2:
+            label2.destroy()
 
-        # Create new labels
-        data_loaded_label1 = tk.Label(root, text="DATA LOADED", fg="red")
-        data_loaded_label1.pack(pady=10)
+        # Create new labels and update UI
+        label1 = tk.Label(root, text="DATA LOADED", fg="red")
+        label1.pack(pady=10)
         
-        data_loaded_label2 = tk.Label(root, text="You can now Save.", fg="blue")
-        data_loaded_label2.pack(pady=10)
+        label2 = tk.Label(root, text="You can now Save.", fg="blue")
+        label2.pack(pady=10)
 
 
 def process_files():
@@ -221,6 +231,8 @@ def auto_fit_columns(file_path):
         ws.column_dimensions[col_letter].width = adjusted_width
     wb.save(file_path)
     wb.close()
+
+# base code needed to run TK UI
 
 root = tk.Tk()
 root.title("Serial Number Processing")
