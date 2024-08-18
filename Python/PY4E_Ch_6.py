@@ -13,7 +13,7 @@ string = text[colon + 1: 30]
 
 # Create the float from our string we just created.  
 # Float automatically gets rid of white space so we dont need to trim anything
-number = float(num)
+number = float(string)
 
 # print out the final float number
 print(number)
