@@ -7,9 +7,12 @@ You will parse the From line using split() and print out the second word in the 
 Hint: make sure not to include the lines that start with 'From:'. Also look at the last line of the sample output to see how to print the count.
 
 You can download the sample data at http://www.py4e.com/code3/mbox-short.txt
+
+-- NOTE: The mbox-short.txt I used was altered with additional errors that needed to be correct for.
+This code will still work with the py4e mbox-short.txt. But the additional protections are from the Bonus use cases discussed after the chapter.
 """
 
-# some code already given to us in the test
+# code already given to us in the test
 fname = input("Enter file name: ")
 
 # Error handling in case file doesnt exist or name is typed wrong
@@ -25,15 +28,23 @@ for line in fh:
     # remove extra \n linebreaks
     line = line.rstrip()
 
+    # Protection code to SKIP blank lines
+    if line == '':
+        continue
+
     # before doing anything check if line is the one we want
     if not line.startswith("From "):
         continue
-    
-    # if the line DID start with From, add to the running count
-    count += 1
 
     # split the line into words
     words = line.split()
+
+    # Protection from fake lines that have From, but no actual email
+    if len(words) < 3:
+        continue
+    
+    # if the line DID start with From and was not a fake line, then add to the running count
+    count += 1
 
     # extract the current lines email
     email = words[1]
