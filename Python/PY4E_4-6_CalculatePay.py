@@ -10,7 +10,11 @@
 # Do not name your variable sum or use the sum() function.
 
 
-# ANSWER:
+
+NOTE: *
+"I have since come back to this after a year and decided to update my answer with better code."
+
+# Original ANSWER:
 
 def computepay(h, r):
     if h >= 40:
@@ -38,3 +42,34 @@ while True:
 
 p = computepay(hrs, rate)
 print("Pay", p)
+
+
+#  NEW UPDATED ANSWER:
+
+def computepay(h, r):
+    if h > 40:
+        ot = h - 40
+        op = ot * (r * 1.5)
+        h = 40
+        p = (h * r) + op
+    else:
+        p = h * r
+    return p
+
+def get_input(prompt):
+    while True:
+        user_input = input(prompt)
+        try:
+            value = float(user_input)
+            return value
+        except ValueError:
+            print("Please enter a valid number.")
+
+
+h = get_input("Enter Hours: ")
+r = get_input("Enter Pay Rate: ")
+
+
+pay = computepay(h, r)
+
+print("Pay", pay)
