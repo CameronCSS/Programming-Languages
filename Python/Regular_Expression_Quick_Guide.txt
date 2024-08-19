@@ -1,5 +1,7 @@
 Python Regular Expression Quick Guide
 
+* Make sure you import re to use RegExp in Python *
+
 ^        Matches the beginning of a line
 $        Matches the end of the line
 .        Matches any character
