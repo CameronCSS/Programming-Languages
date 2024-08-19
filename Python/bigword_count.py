@@ -2,6 +2,7 @@
 
 filename = input('Enter file:')
 
+# Error handling to make sure file exists
 try:
     handle = open(filename)
 except:
