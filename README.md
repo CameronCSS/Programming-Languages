@@ -22,6 +22,9 @@
 <br> :ballot_box_with_check: Completed Kaggle 'Intro to Programming' Course
 <br> :ballot_box_with_check: Built out a few simple programs in Python through Self Learning
 
+> [!IMPORTANT]
+> <a href="https://github.com/CameronCSS/Programming-Languages/blob/main/Python/Regular_Expression_Quick_Guide.txt" target="new">RegExp Quick Guide</a>
+
 ## Python Projects
 <a href="https://github.com/CameronCSS/Programming-Languages/tree/main/Python%20Wage%20Calculator" target="new">Python Wage Calculator</a>
 
@@ -58,7 +61,6 @@
 
 &nbsp; &nbsp;- A repo full of my Javascript code. Lots of custom stuff made to work on Carrd websites.
 
-  
 ----
 
 ### View My Other Projects
