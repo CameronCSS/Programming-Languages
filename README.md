@@ -30,6 +30,10 @@
 
 &nbsp; &nbsp;- Learned the power of Pandas and PyQt5 libraries. Also learned the importance of notating code for Bug fixing in the future.
 
+<a href="https://github.com/CameronCSS/Programming-Languages/tree/main/What's%20for%20dinner" target="new">What's 4 Dinner?</a>
+
+&nbsp; &nbsp;- A web app designed to simplify both meal planning and shopping for dinner.
+
 ## [Jupyter Notebooks](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/README.md)
 [Review Sentiment Analysis](https://github.com/CameronCSS/Programming-Languages/blob/main/Data%20Notebooks/Review%20Sentiment%20Analysis.ipynb)
 
