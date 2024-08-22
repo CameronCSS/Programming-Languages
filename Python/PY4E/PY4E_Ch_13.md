@@ -41,3 +41,13 @@
 ----
 
 ## JSON (JavaScript Object Notation)
+
+JSON is very similar to python dictionaries. It often uses dictionaries inside dictionaries.... Which are just key|value pairs within other key|value pairs
+
+## API (Application Programming Interfaces)
+
+- an API is an endpoint where two applications can talk to each other. 
+
+- A RESTful API is an architectural style for an application programming interface that uses HTTP requests to access and use data.
+
+- That data can be used to GET , PUT , POST and DELETE data types, which refers to reading, updating, creating and deleting operations related to resources.
