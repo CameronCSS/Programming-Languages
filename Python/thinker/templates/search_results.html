@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Search Results</h1>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+    <ul>
+        {% if results %}
+            {% for note in results %}
+                <li><strong>{{ note.title }}</strong>: {{ note.content }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No notes found.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>
