@@ -1,0 +1,31 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: expensetrack
+      DB_HOST: db
+      DB_PORT: 5432
+
+  db:
+    image: postgres:15.4
+    environment:
+      POSTGRES_DB: expensetrack
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
